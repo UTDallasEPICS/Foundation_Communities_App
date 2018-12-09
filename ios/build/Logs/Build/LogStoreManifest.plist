@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>9</integer>
+	<key>logs</key>
+	<dict>
+		<key>84E29B17-0418-4CF8-8721-57EEF5712759</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>84E29B17-0418-4CF8-8721-57EEF5712759.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>E</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>test project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>test</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project test with scheme test and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>565030074.160869</real>
+			<key>timeStoppedRecording</key>
+			<real>565030086.13380802</real>
+			<key>title</key>
+			<string>Building project test with scheme test and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>84E29B17-0418-4CF8-8721-57EEF5712759</string>
+		</dict>
+		<key>D2C47D13-3464-499D-B29E-70B7D3DC7085</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>D2C47D13-3464-499D-B29E-70B7D3DC7085.xcactivitylog</string>
+			<key>highLevelStatus</key>
+			<string>E</string>
+			<key>schemeIdentifier-containerName</key>
+			<string>test project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>test</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project test with scheme test and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>565378106.34323204</real>
+			<key>timeStoppedRecording</key>
+			<real>565378115.40863395</real>
+			<key>title</key>
+			<string>Building project test with scheme test and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>D2C47D13-3464-499D-B29E-70B7D3DC7085</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

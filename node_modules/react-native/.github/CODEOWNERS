@@ -1,0 +1,15 @@
+docs/* @hramos
+blog/* @hramos
+Libraries/Animated/* @janicduplessis
+Libraries/NativeAnimation/* @janicduplessis
+Libraries/Image/* @shergin
+Libraries/Text/* @shergin
+React/Base/* @shergin
+React/Views/* @shergin
+React/Modules/* @shergin
+React/CxxBridge/* @mhorowitz
+ReactAndroid/src/main/java/com/facebook/react/animated/* @janicduplessis
+package.json @hramos
+local-cli/core/* @grabbou @kureev
+local-cli/link/* @grabbou @kureev
+local-cli/unlink/* @grabbou @kureev
