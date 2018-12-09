@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Foundations Community Service Project
 ## Purpose
 This application serves as a mobile portal to locate Foundation Communities tax offices & sign up for appointments, satisfying the existing lack of mobile support for their website.
@@ -16,3 +17,7 @@ This application serves as a mobile portal to locate Foundation Communities tax 
 <img src="/images/map_screen.png" alt="MapScreen" width="270" height= "480"/>
 <p><b> Register Screen view </b></p>
 <img src="/images/register_screen.png" alt="RegisterScreen" width="270" height= "480"/>
+=======
+# Foundation_Communities_App
+Code and Related Files for Foundation Communities App 
+>>>>>>> 2cb0756e4c2304e610c2521bb3e9d9ae2cef07da

@@ -1,0 +1,57 @@
+
+
+<form #f="ngForm" (ngSubmit)="save(f.value)">
+  <div class="form-group">
+    <label for="customerName">Customer Name</label>
+    <input #customerName="ngModel" [(ngModel)]="customer.customerName" name="customerName" id="customerName" type="text" class="form-control" required>
+    <div class="alert alert-danger" *ngIf="customerName.touched && customerName.invalid">
+      Customer Name is required.
+    </div>
+  </div>        
+  <div class="form-group">
+    <label for="phoneNumber">Phone Number</label>
+    <div class="input-group">
+      <input #phoneNumber="ngModel" [(ngModel)]="customer.phoneNumber" name="phoneNumber" id="phoneNumber" type="number" class="form-control" required [min]="0">
+    </div>
+    <div class="alert alert-danger" *ngIf="phoneNumber.touched && phoneNumber.invalid">
+      <div *ngIf="phoneNumber.errors.required">Phone Number is required.</div>
+      <div *ngIf="phoneNumber.errors.min">Phone Number should be 0 or higher.</div>
+    </div>
+  </div>     
+  <div class="form-group">
+    <label for="emailId">Email Id</label>
+    <input #emailId="ngModel" [(ngModel)]="customer.emailId" name="emailId" id="emailId" type="text" class="form-control" required>
+    <div class="alert alert-danger" *ngIf="emailId.touched && emailId.invalid">
+      Email Id is required.
+    </div>
+  </div>   
+  <div class="form-group">
+    <label for="time">Time</label>
+    <input #time="ngModel" [(ngModel)]="customer.time" name="time" id="time" type="text" class="form-control" required>
+    <div class="alert alert-danger" *ngIf="time.touched && time.invalid">
+      Appointment Time is required.
+    </div>
+  </div>       
+  <div class="form-group">
+    <label for="apptDate">Date</label>
+    <input #apptDate="ngModel" [(ngModel)]="customer.apptDate" name="apptDate" id="apptDate" type="text" class="form-control" required url>
+    <div class="alert alert-danger" *ngIf="apptDate.touched && apptDate.invalid">
+      <div *ngIf="apptDate.errors.required">Date is required.</div>
+    </div>
+  </div>        
+  <div class="form-group">
+    <label for="location">Location</label>
+    <select #location="ngModel" [(ngModel)]="customer.location" name="location" id="location" class="form-control" required>
+      <option value=""></option>
+      <option *ngFor="let c of locations$ | async" [value]="c.$key">
+        {{ c.name }}
+      </option>
+    </select>
+    <div class="alert alert-danger" *ngIf="location.touched && location.invalid">
+      Location is required.
+    </div>
+  </div> 
+  <button class="btn btn-primary">Save</button>
+  <button type="button" (click)="delete()" class="btn btn-danger">Delete</button>
+</form>    
+
