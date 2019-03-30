@@ -34,7 +34,7 @@ export default class AboutScreen extends React.Component {
                     </Text>
                 </View>
             </Card>
-            <Text style={styles.paraText}>Dallas Community Tax Centers offer free tax preparation to individuals and families that make less than $54,000 a year</Text>
+            <Text style={styles.paraText}>Dallas Community Tax Centers offer free tax preparation to individuals and families that make less than $58,000 a year</Text>
 
             <Card
 containerStyle={styles.miniHeader}
