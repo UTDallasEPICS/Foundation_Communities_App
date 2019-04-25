@@ -134,6 +134,6 @@ export default class DetailsScreen extends React.Component {
         i++;
        });
 
-       Alert.alert('Number of Customers: ' + i);
+       Alert.alert('Number of Customers : ' + i);
     }
   }
