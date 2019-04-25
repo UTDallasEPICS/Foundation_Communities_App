@@ -156,7 +156,7 @@ class MapScreen extends Component {
           {this.state.markers.map((marker, index) => (
             <Touchable 
             style={styles.card} 
-            key={index}
+            key={index} 
             onPress={() =>
               this.props.navigation.navigate('Details', {
                 title: 'Location',

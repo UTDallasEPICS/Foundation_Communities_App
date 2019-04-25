@@ -74,8 +74,11 @@ class MoreScreen extends React.Component {
       const customerName = name;
       const emailId = email;
       const phoneNumber = num;
+      //This combines the apptDate and the location 
+      const apptDate_Time = apptDate + '_' + location;
       //It will not allow login when any of the fields is unaddressed
-      if (this.state.name === '' || this.state.num === ' ' || this.state.email === '' || this.state.Time === INITIAL_TIME || this.state.location === '') {
+      if (this.state.name === '' || this.state.num === ' ' 
+      || this.state.email === '' || this.state.Time === INITIAL_TIME || this.state.location === '') {
         //Alert.alert('Cannot Login');
         if(this.state.name === '') {
           Alert.alert('Enter your name in the name field');
@@ -96,7 +99,7 @@ class MoreScreen extends React.Component {
       }
         //Pushing the information to firebase
         firebase.database().ref('/customers/')
-        .push({ customerName, phoneNumber, emailId, apptDate, time, location })
+        .push({ customerName, phoneNumber, emailId, apptDate, time, location, apptDate_Time })
         .then(() => {
           Alert.alert('Your appointment request has been received');
           //Reset the information
