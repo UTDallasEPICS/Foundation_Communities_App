@@ -27,6 +27,10 @@ target 'foundation_communities_app' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'Firebase/Core', '~> 6.3.0'
+
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
   target 'foundation_communities_appTests' do
     inherit! :search_paths
     # Pods for testing

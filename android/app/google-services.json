@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "546968516703",
+    "firebase_url": "https://ecom3-6dcc9.firebaseio.com",
+    "project_id": "ecom3-6dcc9",
+    "storage_bucket": "ecom3-6dcc9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546968516703:android:4459c173ba29d2db6243ea",
+        "android_client_info": {
+          "package_name": "com.epics.financialApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546968516703-trtmtarlm9ogusc07r5q4gbbs5tl6d1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg0xKYsWHKEOs1_WMvGRGqf8p7EoSBRfo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546968516703-trtmtarlm9ogusc07r5q4gbbs5tl6d1f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "546968516703-8on3fdjh5jusg1s2mhk7u5kl8g20ckpl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.epics.financialApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>546968516703-8on3fdjh5jusg1s2mhk7u5kl8g20ckpl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.546968516703-8on3fdjh5jusg1s2mhk7u5kl8g20ckpl</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCWPR1xxRI6NEtfubSSkIoklHrXuqHd-8k</string>
+	<key>GCM_SENDER_ID</key>
+	<string>546968516703</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.epics.financialApp</string>
+	<key>PROJECT_ID</key>
+	<string>ecom3-6dcc9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ecom3-6dcc9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:546968516703:ios:77cf8e71470521e46243ea</string>
+	<key>DATABASE_URL</key>
+	<string>https://ecom3-6dcc9.firebaseio.com</string>
+</dict>
+</plist>
