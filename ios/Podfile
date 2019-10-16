@@ -30,6 +30,10 @@ target 'foundation_communities_app' do
   pod 'Firebase/Core', '~> 6.3.0'
 
 
+
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'foundation_communities_appTests' do
     inherit! :search_paths
     # Pods for testing
