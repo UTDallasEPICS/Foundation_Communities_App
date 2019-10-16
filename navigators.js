@@ -11,6 +11,8 @@ import {
 } from 'react-navigation-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { Platform } from 'react-native';
+
 import HomeScreen from './screens/HomeScreen';
 import FreeTaxScreen from './screens/FreeTaxScreen';
 import DetailsScreen from './screens/DetailsScreen';
@@ -29,13 +31,13 @@ const HomeStack = createStackNavigator({
   About: {
     screen: AboutScreen,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'About',
     },
   },
   Free: {
     screen: FreeTaxScreen,
     navigationOptions: {
-      tabBarLabel: 'Home',
+      tabBarLabel: 'Tax',
     },
   },
 });
@@ -61,17 +63,26 @@ const bottomTab = createBottomTabNavigator({
   More: { screen: MoreStack },
 },
 {
-  navigationOptions: ({ navigation }) => ({
+  defaultNavigationOptions: ({ navigation }) => ({
     // eslint-disable-next-line react/display-name
-    tabBarIcon: ({ focused, tintColor }) => {
+    tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
+      if (Platform.isPad) {
+        iconName = 'ios';
+      } else {
+        iconName = 'md';
+      }
+
       if (routeName === 'Home') {
-        iconName = `ios-home${focused ? '' : '-outline'}`;
+        // iconName = `home${focused ? '' : '-outline'}`;
+        iconName += '-home';
       } else if (routeName === 'Map') {
-        iconName = `ios-map${focused ? '' : '-outline'}`;
+        // iconName = `map${focused ? '' : '-outline'}`;
+        iconName += '-map';
       } else if (routeName === 'More') {
-        iconName = `ios-more${focused ? '' : '-outline'}`;
+        // iconName = `more${focused ? '' : '-outline'}`;
+        iconName += '-more';
       }
 
       // You can return any component that you like here! We usually use an
