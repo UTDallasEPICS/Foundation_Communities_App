@@ -6,10 +6,10 @@ import {
   Animated,
   Image,
   Dimensions,
-  MapView,
 } from 'react-native';
 import firebase from 'react-native-firebase';
 import Touchable from 'react-native-platform-touchable';
+import MapView, { Marker, PROVIDER_DEFAULT, UrlTile, MAP_TYPES } from 'react-native-maps';
 import mystyles from '../styles/styles';
 
 // import Geocoder from 'react-native-geocoding';
@@ -27,166 +27,6 @@ const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 100;
 
 const streetName = 'hold';
-
-class MapScreen extends Component {
-  static navigationOptions = {
-    headerTitle: <Text style={mystyles.headertitle}>Locations</Text>,
-    headerStyle: {
-      backgroundColor: 'white',
-      elevation: 0.8,
-      shadowOpacity: 0.8,
-    },
-  };
-
-  state = { markers: [], region: {} };
-
-  componentWillMount() {
-    this.index = 0;
-    this.animation = new Animated.Value(0);
-    // axios.get('https://api.jsonbin.io/b/5bff17e790a73066ac17062b/1').then(response => this.setState(response.data));
-    const ref = firebase.database().ref('locationMap');
-    ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
-  }
-
-  componentDidMount() {
-    // We should detect when scrolling has stopped then animate
-    // We should just debounce the event listener here
-    this.animation.addListener(({ value }) => {
-      // animate 30% away from landing on the next item
-      let index = Math.floor((value / (CARD_WIDTH * 3.5)) + 0.3);
-      if (index >= this.state.markers.length) {
-        index = this.state.markers.length - 1;
-      }
-      if (index <= 0) {
-        index = 0;
-      }
-
-      clearTimeout(this.regionTimeout);
-      this.regionTimeout = setTimeout(() => {
-        if (this.index !== index) {
-          this.index = index;
-          const { coordinate } = this.state.markers[index];
-          this.map.animateToRegion(
-            {
-              ...coordinate,
-              latitudeDelta: this.state.region.latitudeDelta,
-              longitudeDelta: this.state.region.longitudeDelta,
-            },
-            350,
-          );
-        }
-      }, 10);
-    });
-  }
-
-  render() {
-    const { params } = this.props.navigation.state;
-    const mode = params ? params.mode : 0;
-    const interpolations = this.state.markers.map((marker, index) => {
-      const inputRange = [
-        (index - 1) * CARD_WIDTH * 3.5,
-        index * CARD_WIDTH * 3.5,
-        ((index + 1) * CARD_WIDTH * 3.5),
-      ];
-      const scale = this.animation.interpolate({
-        inputRange,
-        outputRange: [1, 2.5, 1],
-        extrapolate: 'clamp',
-      });
-      const opacity = this.animation.interpolate({
-        inputRange,
-        outputRange: [0.35, 1, 0.35],
-        extrapolate: 'clamp',
-      });
-      return { scale, opacity };
-    });
-    return (
-
-      <View style={styles.container}>
-        <MapView
-          ref={(map) => this.map = map}
-          initialRegion={INTIIAL_REGION}
-          style={styles.container}
-        >
-          {this.state.markers.map((marker, index) => {
-            const scaleStyle = {
-              transform: [
-                {
-                  scale: interpolations[index].scale,
-                },
-              ],
-            };
-            const opacityStyle = {
-              opacity: interpolations[index].opacity,
-            };
-            return (
-              <MapView.Marker
-              key={index}
-              name={marker.title}
-              coordinate={marker.coordinate}
-              lat={marker.coordinate.latitude}
-              long={marker.coordinate.longitude}
-              >
-                <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                  <View style={styles.marker} />
-                </Animated.View>
-
-              </MapView.Marker>
-            );
-          })}
-        </MapView>
-        <Animated.ScrollView
-          horizontal
-          scrollEventThrottle={1}
-          showsHorizontalScrollIndicator={false}
-          snapToInterval={CARD_WIDTH * 3.5}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: {
-                  contentOffset: {
-                    x: this.animation,
-                  },
-                },
-              },
-            ],
-            { useNativeDriver: true },
-          )}
-          style={styles.scrollView}
-          contentContainerStyle={styles.endPadding}
-        >
-          {this.state.markers.map((marker, index) => (
-            <Touchable
-            style={styles.card}
-            key={index}
-            onPress={() => this.props.navigation.navigate('Details', {
-              title: 'Location',
-              location: marker.title,
-              description: marker.description,
-              image: this.state.markers[index].image,
-            })
-            }
-            >
-            <View style={{ flex: 1, flexDirection: 'column' }}>
-              <Image
-                source={marker.image}
-                style={styles.cardImage}
-                resizeMode='cover'
-              />
-              <View style={styles.textContent}>
-                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.description}
-                </Text>
-              </View>
-            </View>
-            </Touchable>
-          ))}
-        </Animated.ScrollView>
-      </View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -253,4 +93,193 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MapScreen;
+export default class MapScreen extends Component {
+  static navigationOptions = {
+    headerTitle: <Text style={mystyles.headertitle}>Locations</Text>,
+    headerStyle: {
+      backgroundColor: 'white',
+      elevation: 0.8,
+      shadowOpacity: 0.8,
+    },
+  };
+
+  state = { markers: [], region: {} };
+
+  componentDidMount() {
+    this.index = 0;
+    this.animation = new Animated.Value(0);
+    // axios.get('https://api.jsonbin.io/b/5bff17e790a73066ac17062b/1').then(response => this.setState(response.data));
+    const ref = firebase.database().ref('locationMap');
+    ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
+
+    // We should detect when scrolling has stopped then animate
+    // We should just debounce the event listener here
+    this.animation.addListener(({ value }) => {
+      // animate 30% away from landing on the next item
+      let index = Math.floor((value / (CARD_WIDTH * 3.5)) + 0.3);
+      if (index >= this.state.markers.length) {
+        index = this.state.markers.length - 1;
+      }
+      if (index <= 0) {
+        index = 0;
+      }
+
+      clearTimeout(this.regionTimeout);
+      this.regionTimeout = setTimeout(() => {
+        if (this.index !== index) {
+          this.index = index;
+          const { coordinate } = this.state.markers[index];
+          this.map.animateToRegion(
+            {
+              ...coordinate,
+              latitudeDelta: this.state.region.latitudeDelta,
+              longitudeDelta: this.state.region.longitudeDelta,
+            },
+            350,
+          );
+        }
+      }, 10);
+    });
+  }
+
+  render() {
+    const { params } = this.props.navigation.state;
+    const mode = params ? params.mode : 0;
+    const interpolations = this.state.markers.map((marker, index) => {
+      const inputRange = [
+        (index - 1) * CARD_WIDTH * 3.5,
+        index * CARD_WIDTH * 3.5,
+        ((index + 1) * CARD_WIDTH * 3.5),
+      ];
+      const scale = this.animation.interpolate({
+        inputRange,
+        outputRange: [1, 2.5, 1],
+        extrapolate: 'clamp',
+      });
+      const opacity = this.animation.interpolate({
+        inputRange,
+        outputRange: [0.35, 1, 0.35],
+        extrapolate: 'clamp',
+      });
+      return { scale, opacity };
+    });
+
+    return (
+      <View style={styles.container}>
+        {/* <MapView
+          ref={(map) => { this.map = map; }}
+          initialRegion={INTIIAL_REGION}
+          style={styles.container}
+        >
+          {this.state.markers.map((marker, index) => {
+            const scaleStyle = {
+              transform: [
+                {
+                  scale: interpolations[index].scale,
+                },
+              ],
+            };
+            const opacityStyle = {
+              opacity: interpolations[index].opacity,
+            };
+            return (
+              <MapView.Marker
+              key={index}
+              name={marker.title}
+              coordinate={marker.coordinate}
+              lat={marker.coordinate.latitude}
+              long={marker.coordinate.longitude}
+              >
+                <Animated.View style={[styles.markerWrap, opacityStyle]}>
+                  <View style={styles.marker} />
+                </Animated.View>
+
+              </MapView.Marker>
+            );
+          })}
+        </MapView> */}
+        <MapView provider={PROVIDER_DEFAULT} mapType={MAP_TYPES.STANDARD}>
+          <UrlTile
+            urlTemplate="http://a.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+            maximumZ={19}
+          />
+          {/* {this.state.markers.map((marker, index) => {
+            const scaleStyle = {
+              transform: [
+                {
+                  scale: interpolations[index].scale,
+                },
+              ],
+            };
+            const opacityStyle = {
+              opacity: interpolations[index].opacity,
+            };
+            return (
+                // <Marker
+                //   key={index}
+                //   provider={PROVIDER_DEFAULT}
+                //   title={marker.title}
+                //   coordinate={marker.coordinate}
+                //   lat={marker.coordinate.latitude}
+                //   long={marker.coordinate.longitude}
+                // >
+                //   <Animated.View style={[styles.markerWrap, opacityStyle]}>
+                //     <View style={styles.marker} />
+                //   </Animated.View>
+
+                // </Marker>
+            );
+          })} */}
+        </MapView>
+        <Animated.ScrollView
+          horizontal
+          scrollEventThrottle={1}
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={CARD_WIDTH * 3.5}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: this.animation,
+                  },
+                },
+              },
+            ],
+            { useNativeDriver: true },
+          )}
+          style={styles.scrollView}
+          contentContainerStyle={styles.endPadding}
+        >
+          {this.state.markers.map((marker, index) => (
+            <Touchable
+            style={styles.card}
+            key={index}
+            onPress={() => this.props.navigation.navigate('Details', {
+              title: 'Location',
+              location: marker.title,
+              description: marker.description,
+              image: this.state.markers[index].image,
+            })
+            }
+            >
+            <View style={{ flex: 1, flexDirection: 'column' }}>
+              <Image
+                source={marker.image}
+                style={styles.cardImage}
+                resizeMode='cover'
+              />
+              <View style={styles.textContent}>
+                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {marker.description}
+                </Text>
+              </View>
+            </View>
+            </Touchable>
+          ))}
+        </Animated.ScrollView>
+      </View>
+    );
+  }
+}

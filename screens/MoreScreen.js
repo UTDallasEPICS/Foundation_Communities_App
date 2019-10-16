@@ -16,7 +16,7 @@ import styles from '../styles/styles';
 
 const INITIAL_TIME = new Date();
 class MoreScreen extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     // Reading the location data from firebase
     const ref = firebase.database().ref('locationMap');
     ref.on('value', (snapshot) => { this.setState({ DATA_RETURNED: snapshot.val() }); });
