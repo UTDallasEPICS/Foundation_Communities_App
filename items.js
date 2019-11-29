@@ -1,12 +1,24 @@
 const items = [
-  'item 1',
-  'item 2',
-  'item 3',
-  'item 4',
-  'item 5',
-  'item 6',
-  'item 7',
-  'item 8',
+  {
+    name: 'item 1',
+    isChecked: false,
+  },
+  {
+    name: 'item 2',
+    isChecked: false,
+  },
+  {
+    name: 'item 3',
+    isChecked: false,
+  },
+  {
+    name: 'item 4',
+    isChecked: false,
+  },
+  {
+    name: 'item 5',
+    isChecked: false,
+  },
 ];
 
 export default items;

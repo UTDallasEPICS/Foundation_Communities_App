@@ -19,6 +19,7 @@ import DetailsScreen from './screens/DetailsScreen';
 import AboutScreen from './screens/AboutScreen';
 import MapScreen from './screens/MapScreen';
 import MoreScreen from './screens/MoreScreen';
+import ItemList from './screens/ItemList';
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -57,9 +58,14 @@ const MoreStack = createStackNavigator({
   LocationPicker: { screen: MapScreen },
 });
 
+const ItemStack = createStackNavigator({
+  Item: { screen: ItemList },
+});
+
 const bottomTab = createBottomTabNavigator({
   Home: { screen: HomeStack },
   Map: { screen: MapStack },
+  Item: { screen: ItemList },
   More: { screen: MoreStack },
 },
 {
@@ -83,6 +89,8 @@ const bottomTab = createBottomTabNavigator({
       } else if (routeName === 'More') {
         // iconName = `more${focused ? '' : '-outline'}`;
         iconName += '-more';
+      } else if (routeName === 'Item') {
+        iconName += '-checkbox';
       }
 
       // You can return any component that you like here! We usually use an
