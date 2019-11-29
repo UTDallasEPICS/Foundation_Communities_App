@@ -8,19 +8,41 @@ import { CheckBox } from 'react-native-elements';
 import items from '../items';
 
 const ItemList = () => {
-  const [itemList, setItemList] = useState(items);
+  const [isCompleted, setCompletion] = useState(items.isCompleted);
+  const [itemList, setItemList] = useState(items.list);
 
-  const clicked = (item) => {
-    const newList = itemList.map((curr) => {
-      if (curr.name === item.name) {
-        // eslint-disable-next-line no-param-reassign
-        curr.isChecked = !curr.isChecked;
-      }
+  // AsyncStorage.getItem('items', (err, res) => {
+  //   if (res) {
+  //     const savedItems = JSON.parse(res);
+  //     setCompletion(savedItems.isCompleted);
+  //     setItemList(savedItems.list);
+  //   }
+  // });
 
-      return curr;
-    });
+  const clicked = (index) => {
+    const newList = itemList;
+    newList[index].isChecked = !newList[index].isChecked;
 
     setItemList(newList);
+
+    let numDone = 0;
+    itemList.forEach((item) => {
+      if (item.isChecked === true) {
+        numDone += 1;
+      } 
+    });
+    if (numDone === itemList.length) {
+      setCompletion(true);
+    } else {
+      setCompletion(false);
+    }
+
+    const currList = {
+      isCompleted,
+      list: itemList,
+    };
+
+    // AsyncStorage.setItem('items', JSON.stringify(currList));
   };
 
   return (
@@ -31,7 +53,7 @@ const ItemList = () => {
             key={index}
             title={item.name}
             checked={item.isChecked}
-            onPress={() => { clicked(item); }}
+            onPress={() => { clicked(index); }}
           />
         ))
       }
