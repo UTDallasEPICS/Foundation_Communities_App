@@ -10,21 +10,13 @@ import firebase from 'react-native-firebase';
 
 export default class admin extends React.Component {
   state = {
-    locations: []
+    locations: [],
+    wait: "",
+    current: ""
   }
 
-  componentDidMount() {
-    
-  }
 
-  clickme=()=>{
-    var data = this.state.PickerValue;
-    if(data=="")
-    {
-      alert("Please select a location");
-    }
-    alert(this.state.Pickervalue);
-  }
+
   static navigationOptions = {
     headerTitle: <Text style={styles.headertitle}>admin</Text>,
     headerStyle: {
@@ -46,8 +38,8 @@ export default class admin extends React.Component {
             <Text style={styles.requestTitle}>Choose a location to edit</Text>
             <Picker
             style={{width: '80%'}}
-            selectedValue={this.state.PickerValue}
-            onValueChange={(itemValue, itemIndex) => this.setState({PickerValue : itemValue})}
+            selectedValue={this.state.current}
+            onValueChange={(itemValue, itemIndex) => this.setState({current : itemIndex})}
             > 
             <Picker.Item label ="Select a location" value="loc"  />
             {this.state.locations.map((location, index) => (
@@ -63,10 +55,23 @@ export default class admin extends React.Component {
             placeholder="Enter a wait time."
             placeholderTextColor="#dddddd"
             autoCapitalize="none"
-            value={this.state.name}
-            onChangeText={(name) => this.setState({ name })}
+            value={this.state.wait}
+            onChangeText={(wait) => this.setState({ wait })}
           />
-
+          <Touchable
+          onPress={() =>  
+                        {firebase.database.ref('locationMap/' + this.state.current).update({
+                            wait: this.state.wait
+                          })}
+                          }  
+          style={styles.submitButton}
+          >
+            <View>
+                <Text style={styles.cardtext}>
+                  Update time
+                </Text>
+            </View>
+        </Touchable>
         </ScrollView>
     );
   }

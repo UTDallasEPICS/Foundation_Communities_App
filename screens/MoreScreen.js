@@ -17,6 +17,8 @@ import styles from '../styles/styles';
 const INITIAL_TIME = new Date();
 class MoreScreen extends React.Component {
 
+
+
   static navigationOptions = {
     tabBarLabel: '',
     headerTitle: <Text style={styles.headertitle}>Admin Login Screen</Text>,
@@ -62,7 +64,11 @@ class MoreScreen extends React.Component {
 
 
           <Touchable
-          onPress={() => this.props.navigation.navigate('admin')} style={styles.cardStyle} 
+          onPress={() => {
+            if(this.state.name == "Foundation" && this.state.pass == "Communities")
+            { 
+            this.props.navigation.navigate('admin')}}} 
+            style={styles.cardStyle} 
           style={styles.submitButton}
           >
             <View>
