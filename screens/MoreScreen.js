@@ -52,11 +52,11 @@ class MoreScreen extends React.Component {
           />
           <TextInput
             textContentType="password"
+            secureTextEntry={true}
             style={myStyles.input}
             underlineColorAndroid="transparent"
-            placeholder="password"
+            placeholder="Password"
             placeholderTextColor="#dddddd"
-            keyboardType='number-pad'
             autoCapitalize="none"
             value={this.state.pass}
             onChangeText={(pass) => this.setState({ pass })}
@@ -65,7 +65,7 @@ class MoreScreen extends React.Component {
 
           <Touchable
           onPress={() => {
-            if(this.state.name == "Foundation" && this.state.pass == "Communities")
+            if(this.state.name === "" && this.state.pass === "")
             { 
             this.props.navigation.navigate('admin')}}} 
             style={styles.cardStyle} 
