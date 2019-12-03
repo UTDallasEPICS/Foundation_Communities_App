@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
-  AsyncStorage,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { CheckBox } from 'react-native-elements';
 
 import items from '../items';
@@ -11,17 +11,19 @@ const ItemList = () => {
   const [isCompleted, setCompletion] = useState(items.isCompleted);
   const [itemList, setItemList] = useState(items.list);
 
-  // AsyncStorage.getItem('items', (err, res) => {
-  //   if (res) {
-  //     const savedItems = JSON.parse(res);
-  //     setCompletion(savedItems.isCompleted);
-  //     setItemList(savedItems.list);
-  //   }
-  // });
+  useEffect(() => {
+    AsyncStorage.getItem('items', (err, res) => {
+      if (res) {
+        const savedItems = JSON.parse(res);
+        setCompletion(savedItems.isCompleted);
+        setItemList(savedItems.list);
+      }
+    });
+  });
 
   const clicked = (index) => {
     const newList = itemList;
-    newList[index].isChecked = !newList[index].isChecked;
+    newList[index].isChecked = !itemList[index].isChecked;
 
     setItemList(newList);
 
@@ -42,7 +44,7 @@ const ItemList = () => {
       list: itemList,
     };
 
-    // AsyncStorage.setItem('items', JSON.stringify(currList));
+    AsyncStorage.setItem('items', JSON.stringify(currList));
   };
 
   return (
