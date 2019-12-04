@@ -4,12 +4,14 @@ import {
 } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import styles from '../styles/styles';
+import Card from 'react-native-elements';
+import { Image } from 'react-native-elements';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    headerTitle: <Text style={styles.headertitle}>Home</Text>,
+    headerTitle: <Text style={styles.headertitle}>Dallas Tax Centers</Text>,
     headerStyle: {
-      backgroundColor: 'white',
+      backgroundColor: '#ffffff',
       elevation: 0.8,
       shadowOpacity: 0.8,
     },
@@ -34,16 +36,32 @@ export default class HomeScreen extends React.Component {
      */
   render() {
     return (
-        <ScrollView contentContainerStyle={{ backgroundColor: '#f6f6f6', flexGrow: 1, justifyContent: 'flex-start', alignItems: 'stretch', paddingBottom: 20 }}>
-            <Touchable onPress={() => this.props.navigation.navigate('About')} style={styles.cardStyle} >
+        <ScrollView contentContainerStyle={{ backgroundColor: '#f2ca6d', flexGrow: 1, justifyContent: 'flex-start', alignItems: 'stretch', paddingBottom: 20 }}>
+            {/* <Image
+              style={{height: 215}}
+              source={require('../assets/icon.png')}
+            /> */}
+
+              <Touchable style={styles.cardStyle} >
                 <View style={{ flex: 1, flexDirection: 'column' }}>
                   <ImageBackground
                   style={{ flex: 1, height: 200 }}
-                  source={require('../assets/images/AboutUs.jpg')}
+                  source={require('../assets/icon.png')}
                   >
                   <View style={{ flex: 1 }} />
                   </ImageBackground>
-                    <Text style={[styles.cardtitleBlack, { marginTop: 10 }]}>
+                </View>
+          </Touchable>
+
+            <Touchable onPress={() => this.props.navigation.navigate('About')} style={styles.cardStyle} >
+                <View style={{ flex: 1, flexDirection: 'column' }}>
+                  {/* <ImageBackground
+                  style={{ flex: 1, height: 200 }}
+                  source={require('../assets/icon.png')}
+                  >
+                  <View style={{ flex: 1 }} />
+                  </ImageBackground> */}
+                    <Text style={[styles.cardtitleBlack, /*{ marginTop: 10 }*/]}>
                       About Us
                     </Text>
                     <Text style={styles.cardtextBlack}>
@@ -52,7 +70,7 @@ export default class HomeScreen extends React.Component {
                 </View>
           </Touchable>
 
-          <Touchable onPress={() => this.props.navigation.navigate('Map')} style={[styles.cardStyle]} >
+         {/* <Touchable onPress={() => this.props.navigation.navigate('Map')} style={[styles.cardStyle]} >
                 <View>
                   <Text style={styles.cardtitleBlack}>
                     Free Tax Filing
@@ -62,7 +80,7 @@ export default class HomeScreen extends React.Component {
                   </Text>
                 </View>
 
-          </Touchable>
+          </Touchable> */}
 
           <Touchable style={[styles.cardStyle]} onPress={() => { Linking.openURL('http://www.foundcom.org/wp-content/uploads/2014/10/What-to-Bring-Checklist-Bilingual.pdf') ;}} style={styles.cardStyle} >
                 <View>
