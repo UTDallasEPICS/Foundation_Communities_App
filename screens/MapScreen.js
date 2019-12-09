@@ -8,9 +8,10 @@ import {
   Dimensions,
 } from 'react-native';
 import firebase from 'react-native-firebase';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Touchable from 'react-native-platform-touchable';
-import MapView, { Marker, PROVIDER_DEFAULT, UrlTile, MAP_TYPES } from 'react-native-maps';
 import mystyles from '../styles/styles';
+
 
 // import Geocoder from 'react-native-geocoding';
 // Geocoder.setApiKey(AIzaSyCfnhC8DJzYBpGlMKmQG8ukDSOm2w9q5C4);
@@ -18,24 +19,27 @@ import mystyles from '../styles/styles';
 const INTIIAL_REGION = {
   latitude: 32.7767,
   longitude: -96.797,
-  latitudeDelta: 0.04864195044303443,
-  longitudeDelta: 0.040142817690068,
+  latitudeDelta: 0.1,
+  longitudeDelta: 0.1,
 };
 const { width, height } = Dimensions.get('window');
 
 const CARD_HEIGHT = height / 4;
 const CARD_WIDTH = CARD_HEIGHT - 100;
 
-const streetName = 'hold';
-
 const styles = StyleSheet.create({
   container: {
     flex: 2.2,
   },
+  map: {
+    flex: 1,
+    width,
+    height,
+  },
   scrollView: {
     paddingTop: 0,
     marginBottom: 0,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2ca6d',
   },
   endPadding: {
     paddingRight: width - (CARD_WIDTH / 0.25),
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     padding: 10,
     elevation: 2,
-    backgroundColor: '#FFF',
+    backgroundColor: '#f2ca6d',
     marginHorizontal: 10,
     shadowColor: '#000',
     shadowRadius: 5,
@@ -109,8 +113,8 @@ export default class MapScreen extends Component {
     this.index = 0;
     this.animation = new Animated.Value(0);
     // axios.get('https://api.jsonbin.io/b/5bff17e790a73066ac17062b/1').then(response => this.setState(response.data));
-    const ref = firebase.database().ref('locationMap');
-    ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
+    //const ref = firebase.database().ref('locationMap');
+    //ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
 
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
@@ -166,70 +170,17 @@ export default class MapScreen extends Component {
 
     return (
       <View style={styles.container}>
-        {/* <MapView
-          ref={(map) => { this.map = map; }}
+        <MapView
           initialRegion={INTIIAL_REGION}
-          style={styles.container}
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
         >
-          {this.state.markers.map((marker, index) => {
-            const scaleStyle = {
-              transform: [
-                {
-                  scale: interpolations[index].scale,
-                },
-              ],
-            };
-            const opacityStyle = {
-              opacity: interpolations[index].opacity,
-            };
-            return (
-              <MapView.Marker
-              key={index}
-              name={marker.title}
+          {this.state.markers.map((marker, key) => (
+            <Marker
+              key={key}
               coordinate={marker.coordinate}
-              lat={marker.coordinate.latitude}
-              long={marker.coordinate.longitude}
-              >
-                <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                  <View style={styles.marker} />
-                </Animated.View>
-
-              </MapView.Marker>
-            );
-          })}
-        </MapView> */}
-        <MapView provider={PROVIDER_DEFAULT} mapType={MAP_TYPES.STANDARD}>
-          <UrlTile
-            urlTemplate="http://a.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
-            maximumZ={19}
-          />
-          {/* {this.state.markers.map((marker, index) => {
-            const scaleStyle = {
-              transform: [
-                {
-                  scale: interpolations[index].scale,
-                },
-              ],
-            };
-            const opacityStyle = {
-              opacity: interpolations[index].opacity,
-            };
-            return (
-                // <Marker
-                //   key={index}
-                //   provider={PROVIDER_DEFAULT}
-                //   title={marker.title}
-                //   coordinate={marker.coordinate}
-                //   lat={marker.coordinate.latitude}
-                //   long={marker.coordinate.longitude}
-                // >
-                //   <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                //     <View style={styles.marker} />
-                //   </Animated.View>
-
-                // </Marker>
-            );
-          })} */}
+            />
+          ))}
         </MapView>
         <Animated.ScrollView
           horizontal

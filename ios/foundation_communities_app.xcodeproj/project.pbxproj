@@ -29,6 +29,7 @@
 		94AF021C445A4221BA8E8853 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D02FCF683CC469FA167114D /* FontAwesome5_Brands.ttf */; };
 		A998091A5A0C24F4C88DB03F /* libPods-foundation_communities_appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA730B24D97F61A83A42D365 /* libPods-foundation_communities_appTests.a */; };
 		C030BD052358BEB200EAC50A /* libPods-foundation_communities_app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EBB30D235529C000A44732 /* libPods-foundation_communities_app.a */; };
+		C03534C1239C4B9800669AE4 /* AirMaps in Resources */ = {isa = PBXBuildFile; fileRef = C03534C0239C4B9800669AE4 /* AirMaps */; };
 		C08B00E7235A1E9D0093B3C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		C08B00E8235A1E9E0093B3C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		C08B01BB235A4ECB0093B3C3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C08B01BA235A4ECA0093B3C3 /* GoogleService-Info.plist */; };
@@ -210,6 +211,7 @@
 		AB4B3B6AC10C4A78926A7D64 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		AC5B9BB041A8D2248D249A73 /* Pods-foundation_communities_app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-foundation_communities_app.debug.xcconfig"; path = "Target Support Files/Pods-foundation_communities_app/Pods-foundation_communities_app.debug.xcconfig"; sourceTree = "<group>"; };
 		B00D6F42199942BB893DCA7D /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		C03534C0239C4B9800669AE4 /* AirMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AirMaps; path = "../node_modules/react-native-maps/lib/ios/AirMaps"; sourceTree = "<group>"; };
 		C08B01BA235A4ECA0093B3C3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C0EBB2D3235521F700A44732 /* libDoubleConversion.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDoubleConversion.a; path = "build/foundation_communities_app/Build/Products/Debug-iphonesimulator/DoubleConversion/libDoubleConversion.a"; sourceTree = "<group>"; };
 		C0EBB2D52355229C00A44732 /* libFirebaseCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFirebaseCore.a; path = "build/foundation_communities_app/Build/Products/Debug-iphonesimulator/FirebaseCore/libFirebaseCore.a"; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C03534C0239C4B9800669AE4 /* AirMaps */,
 				C08B01BA235A4ECA0093B3C3 /* GoogleService-Info.plist */,
 				C0F5C73F23568D8E002E2F19 /* React.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* foundation_communities_app */,
@@ -762,6 +765,7 @@
 				762D03063D8D45A4BB8F8AFE /* Foundation.ttf in Resources */,
 				18881D11373E40AF8322F942 /* Ionicons.ttf in Resources */,
 				5DBFD3CBB74F436F87C5D7C5 /* MaterialCommunityIcons.ttf in Resources */,
+				C03534C1239C4B9800669AE4 /* AirMaps in Resources */,
 				22D0B429CAE6495BAC1AD17A /* MaterialIcons.ttf in Resources */,
 				E55ADDF923986B7800BDD55C /* icon.png in Resources */,
 				DE07A72A2D3B4CF0935727EF /* Octicons.ttf in Resources */,
@@ -823,6 +827,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-foundation_communities_app/Pods-foundation_communities_app-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -842,6 +847,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -1064,6 +1070,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = foundation_communities_appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1084,6 +1091,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = foundation_communities_appTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1108,9 +1116,132 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = GMQ2Z94HFV;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PB_FIELD_32BIT=1",
+					"PB_NO_PACKED_STRUCTS=1",
+					"PB_ENABLE_MALLOC=1",
+					"HAVE_GOOGLE_MAPS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAuthInterop\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCore\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/Google-Maps-iOS-Utils\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/RNFirebase\"",
+					"\"${PODS_ROOT}/Headers/Public/RNGestureHandler\"",
+					"\"${PODS_ROOT}/Headers/Public/RNReanimated\"",
+					"\"${PODS_ROOT}/Headers/Public/RNVectorIcons\"",
+					"\"${PODS_ROOT}/Headers/Public/React-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/React-DevSupport\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTActionSheet\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTAnimation\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTBlob\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTImage\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTLinking\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTNetwork\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTSettings\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTText\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTVibration\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTWebSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/React-cxxreact\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsi\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
+					"\"${PODS_ROOT}/Headers/Public/glog\"",
+					"\"${PODS_ROOT}/Headers/Public/leveldb-library\"",
+					"\"${PODS_ROOT}/Headers/Public/nanopb\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-google-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/yoga\"",
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAuthInterop\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCore\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/Google-Maps-iOS-Utils\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/RNFirebase\"",
+					"\"${PODS_ROOT}/Headers/Public/RNGestureHandler\"",
+					"\"${PODS_ROOT}/Headers/Public/RNReanimated\"",
+					"\"${PODS_ROOT}/Headers/Public/RNVectorIcons\"",
+					"\"${PODS_ROOT}/Headers/Public/React-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/React-DevSupport\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTActionSheet\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTAnimation\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTBlob\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTImage\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTLinking\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTNetwork\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTSettings\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTText\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTVibration\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTWebSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/React-cxxreact\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsi\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
+					"\"${PODS_ROOT}/Headers/Public/glog\"",
+					"\"${PODS_ROOT}/Headers/Public/leveldb-library\"",
+					"\"${PODS_ROOT}/Headers/Public/nanopb\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-google-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/yoga\"",
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
+				);
 				INFOPLIST_FILE = foundation_communities_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/DoubleConversion",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/FirebaseCore",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/FirebaseInstanceID",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/Folly",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/GoogleUtilities",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/RNFirebase",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/RNGestureHandler",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/RNReanimated",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/RNVectorIcons",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-Core",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-DevSupport",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTActionSheet",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTAnimation",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTBlob",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTImage",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTLinking",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTNetwork",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTSettings",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTText",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTVibration",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-RCTWebSocket",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-cxxreact",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-jsi",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-jsiexecutor",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/React-jsinspector",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/glog",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/nanopb",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/yoga",
+					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/DoubleConversion",
 					"$(PROJECT_DIR)/build/foundation_communities_app/Build/Products/Debug-iphonesimulator/FirebaseCore",
@@ -1163,6 +1294,56 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GMQ2Z94HFV;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PB_FIELD_32BIT=1",
+					"PB_NO_PACKED_STRUCTS=1",
+					"PB_ENABLE_MALLOC=1",
+					"HAVE_GOOGLE_MAPS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/DoubleConversion\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAuthInterop\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseCore\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/Google-Maps-iOS-Utils\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/RNFirebase\"",
+					"\"${PODS_ROOT}/Headers/Public/RNGestureHandler\"",
+					"\"${PODS_ROOT}/Headers/Public/RNReanimated\"",
+					"\"${PODS_ROOT}/Headers/Public/RNVectorIcons\"",
+					"\"${PODS_ROOT}/Headers/Public/React-Core\"",
+					"\"${PODS_ROOT}/Headers/Public/React-DevSupport\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTActionSheet\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTAnimation\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTBlob\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTImage\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTLinking\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTNetwork\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTSettings\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTText\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTVibration\"",
+					"\"${PODS_ROOT}/Headers/Public/React-RCTWebSocket\"",
+					"\"${PODS_ROOT}/Headers/Public/React-cxxreact\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsi\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsiexecutor\"",
+					"\"${PODS_ROOT}/Headers/Public/React-jsinspector\"",
+					"\"${PODS_ROOT}/Headers/Public/glog\"",
+					"\"${PODS_ROOT}/Headers/Public/leveldb-library\"",
+					"\"${PODS_ROOT}/Headers/Public/nanopb\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-google-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/react-native-maps\"",
+					"\"${PODS_ROOT}/Headers/Public/yoga\"",
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
+				);
 				INFOPLIST_FILE = foundation_communities_app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1223,6 +1404,7 @@
 				DEVELOPMENT_TEAM = GMQ2Z94HFV;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "foundation_communities_app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1252,6 +1434,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = GMQ2Z94HFV;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "foundation_communities_app-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1279,6 +1462,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "foundation_communities_app-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1306,6 +1490,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "foundation_communities_app-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
