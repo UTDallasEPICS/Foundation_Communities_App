@@ -67,9 +67,16 @@ export default class admin extends React.Component {
           />
           <Touchable
           onPress={() => {
-            firebase.database.ref(`locationMap/${this.state.current}`).update({
-              wait: this.state.wait,
-            });
+           var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date+' '+time;
+            this.state.current.index = this.state.current.index - 1;
+            firebase.database().ref('locationMap/markers/' + this.state.current.index + '/').update({
+              waitTime: this.state.wait,
+              lastUpdated: dateTime
+              
+          });
           }
                           }
           style={styles.submitButton}

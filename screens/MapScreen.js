@@ -260,6 +260,8 @@ export default class MapScreen extends Component {
               location: marker.title,
               description: marker.description,
               image: this.state.markers[index].image,
+              waitTime: this.state.markers[index].waitTime,
+              lastUpdated: this.state.markers[index].lastUpdated,
             })
             }
             >
