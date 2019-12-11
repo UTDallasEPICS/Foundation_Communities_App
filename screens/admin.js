@@ -11,13 +11,21 @@ import styles from '../styles/styles';
 
 export default class admin extends React.Component {
   state = {
-    locations: [],
+    locations: [
+      {
+        title: '',
+        description: '',
+      }
+    ],
     wait: '',
     current: {
       title: '',
       index: 0,
     },
-    newLoc: '',
+    newLoc: {
+      title: '',
+      description: '',
+    },
   }
 
 
@@ -32,14 +40,24 @@ export default class admin extends React.Component {
   };
 
   updateLocation() {
-    let lat; 
-    let lng;
-
-    Geocode.fromAddress(this.state.newLoc).then(res => {
+    Geocode.fromAddress(this.state.newLoc).then((res) => {
       const { lat, lng } = res.results[0].geometry.location;
       console.log(lat, lng);
     });
-  };
+  }
+
+  addLocation() {
+    const address = this.state.newLoc.description;
+    Geocode.fromAddress(address).then((res) => {
+      const { latitude, longitude } = res.results[0].geometry.location;
+      const markerRef = firebase.database.ref(`locationMap/${this.state.locations.length}`);
+      markerRef.child(this.state.locations.length).set({
+        coordinate: { latitude, longitude },
+        description: this.state.newLoc.description,
+        title: this.state.newLoc.title,
+      });
+    });
+  }
 
   render() {
     const ref = firebase.database().ref('locationMap');
@@ -52,7 +70,7 @@ export default class admin extends React.Component {
             <Picker
               style={{ width: '80%' }}
               selectedValue={this.state.current.title}
-              onValueChange={(itemValue, itemIndex) => this.setState({ current: { title: itemValue, index: itemIndex } })}
+              onValueChange={(itemValue, itemIndex) => this.setState({ current: { title: itemValue, index: itemIndex - 1 } })}
             >
             <Picker.Item label ="Select a location" value={{
               title: 'default',
@@ -65,13 +83,13 @@ export default class admin extends React.Component {
 
             <Text style={styles.requestTitle}>Enter wait time for the specified location</Text>
 
-            <TextInput
+            <Input
               style={myStyles.input}
               underlineColorAndroid="transparent"
               placeholder="Enter a wait time."
               placeholderTextColor="#dddddd"
               autoCapitalize="none"
-              value={this.state.wait}
+              defaultValue={this.state.wait}
               onChangeText={(wait) => this.setState({ wait })}
             />
 
@@ -81,7 +99,7 @@ export default class admin extends React.Component {
                   wait: this.state.wait,
                 });
               }}
-              style={styles.submitButton}
+              style={myStyles.submitButton}
             >
               <View>
                   <Text style={styles.cardtext}>
@@ -92,11 +110,32 @@ export default class admin extends React.Component {
 
           <View style={myStyles.editTools}>
             <Input
-              label='Location Address'
-              // value={this.state.current.title}
-              onChangeText={(loc) => {this.setState({ newLoc: loc }); console.log(loc)}}
+              placeholder='Location Name'
+              defaultValue={this.state.current.title}
+              onChangeText={(title) => { this.setState({ newLoc: { title, description: this.state.newLoc.description }}); }}
             />
-            <Button title='Edit Location Info' onPress={ this.updateLocation }/>
+            <Input
+              placeholder='Location Address'
+              defaultValue={ (this.state.current.title !== ''
+                ? this.state.locations[this.state.current.index].description
+                : '')
+              }
+              onChangeText={(description) => { this.setState({ newLoc: { title: this.state.newLoc.title, description } }); }}
+            />
+            <Touchable style={myStyles.submitButton} onPress={ this.updateLocation }>
+              <View>
+                <Text style={styles.cardtext}>
+                  Update Location
+                </Text>
+              </View>
+            </Touchable>
+            <Touchable style={myStyles.submitButton} onPress={ () => this.addLocation() }>
+              <View>
+                <Text style={styles.cardtext}>
+                  Add Location
+                </Text>
+              </View>
+            </Touchable>
           </View>
         </ScrollView>
     );
