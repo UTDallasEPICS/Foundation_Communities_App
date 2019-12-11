@@ -1,20 +1,30 @@
 import React from 'react';
 import {
-  Text, View, ScrollView, Linking, ImageBackground, Picker, TextInput, StyleSheet,
+  Text, View, ScrollView, Picker, TextInput, StyleSheet,
 } from 'react-native';
+import { Button, Input } from 'react-native-elements';
 import Touchable from 'react-native-platform-touchable';
-import { declareExportAllDeclaration } from '@babel/types';
 import firebase from 'react-native-firebase';
+import Geocode from 'react-geocode';
 import styles from '../styles/styles';
 
 
 export default class admin extends React.Component {
   state = {
-    locations: [],
+    locations: [
+      {
+        title: '',
+        description: '',
+      }
+    ],
     wait: '',
     current: {
       title: '',
       index: 0,
+    },
+    newLoc: {
+      title: '',
+      description: '',
     },
   }
 
@@ -29,21 +39,38 @@ export default class admin extends React.Component {
 
   };
 
+  updateLocation() {
+    Geocode.fromAddress(this.state.newLoc).then((res) => {
+      const { lat, lng } = res.results[0].geometry.location;
+      console.log(lat, lng);
+    });
+  }
+
+  addLocation() {
+    const address = this.state.newLoc.description;
+    Geocode.fromAddress(address).then((res) => {
+      const { latitude, longitude } = res.results[0].geometry.location;
+      const markerRef = firebase.database.ref(`locationMap/${this.state.locations.length}`);
+      markerRef.child(this.state.locations.length).set({
+        coordinate: { latitude, longitude },
+        description: this.state.newLoc.description,
+        title: this.state.newLoc.title,
+      });
+    });
+  }
+
   render() {
     const ref = firebase.database().ref('locationMap');
     ref.on('value', (snapshot) => { this.setState({ locations: snapshot.val().markers }); });
     return (
-
-
         <ScrollView contentContainerStyle={{
           backgroundColor: '#f6f6f6', flexGrow: 1, justifyContent: 'flex-start', alignItems: 'stretch', paddingBottom: 20,
         }}>
-
             <Text style={styles.requestTitle}>Choose a location to edit</Text>
             <Picker
               style={{ width: '80%' }}
               selectedValue={this.state.current.title}
-              onValueChange={(itemValue, itemIndex) => this.setState({ current: { title: itemValue, index: itemIndex } })}
+              onValueChange={(itemValue, itemIndex) => this.setState({ current: { title: itemValue, index: itemIndex - 1 } })}
             >
             <Picker.Item label ="Select a location" value={{
               title: 'default',
@@ -56,41 +83,71 @@ export default class admin extends React.Component {
 
             <Text style={styles.requestTitle}>Enter wait time for the specified location</Text>
 
-            <TextInput
-            style={myStyles.input}
-            underlineColorAndroid="transparent"
-            placeholder="Enter a wait time."
-            placeholderTextColor="#dddddd"
-            autoCapitalize="none"
-            value={this.state.wait}
-            onChangeText={(wait) => this.setState({ wait })}
-          />
+            <Input
+              style={myStyles.input}
+              underlineColorAndroid="transparent"
+              placeholder="Enter a wait time."
+              placeholderTextColor="#dddddd"
+              autoCapitalize="none"
+              defaultValue={this.state.wait}
+              onChangeText={(wait) => this.setState({ wait })}
+            />
+
           <Touchable
-          onPress={() => {
-           var today = new Date();
-            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var dateTime = date+' '+time;
-            this.state.current.index = this.state.current.index - 1;
-            firebase.database().ref('locationMap/markers/' + this.state.current.index + '/').update({
-              waitTime: this.state.wait,
-              lastUpdated: dateTime
-              
-          });
-          }
-                          }
-          style={styles.submitButton}
+            onPress={() => {
+              const today = new Date();
+              const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+              const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+              const dateTime = `${date} ${time}`;
+              this.state.current.index = this.state.current.index - 1;
+              firebase.database().ref(`locationMap/markers/${this.state.current.index}/`).update({
+                waitTime: this.state.wait,
+                lastUpdated: dateTime,
+              });
+            }}
+            style={styles.submitButton}
           >
             <View>
                 <Text style={styles.cardtext}>
                   Update time
                 </Text>
             </View>
-        </Touchable>
+          </Touchable>
+
+          <View style={myStyles.editTools}>
+            <Input
+              placeholder='Location Name'
+              defaultValue={this.state.current.title}
+              onChangeText={(title) => { this.setState({ newLoc: { title, description: this.state.newLoc.description } }); }}
+            />
+            <Input
+              placeholder='Location Address'
+              defaultValue={ (this.state.current.title !== ''
+                ? this.state.locations[this.state.current.index].description
+                : '')
+              }
+              onChangeText={(description) => { this.setState({ newLoc: { title: this.state.newLoc.title, description } }); }}
+            />
+            <Touchable style={myStyles.submitButton} onPress={ this.updateLocation }>
+              <View>
+                <Text style={styles.cardtext}>
+                  Update Location
+                </Text>
+              </View>
+            </Touchable>
+            <Touchable style={myStyles.submitButton} onPress={ () => this.addLocation() }>
+              <View>
+                <Text style={styles.cardtext}>
+                  Add Location
+                </Text>
+              </View>
+            </Touchable>
+          </View>
         </ScrollView>
     );
   }
 }
+
 const myStyles = StyleSheet.create({
   container: {
     paddingTop: 23,
@@ -119,4 +176,7 @@ const myStyles = StyleSheet.create({
   submitButtonText: {
     color: 'white',
   },
+  editTools: {
+    
+  }
 });

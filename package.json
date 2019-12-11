@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "react": "16.8.6",
+    "react-geocode": "^0.2.1",
     "react-native": "0.60.5",
     "react-native-elements": "^1.2.6",
     "react-native-firebase": "^5.5.6",
