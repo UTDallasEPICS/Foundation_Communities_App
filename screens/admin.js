@@ -93,26 +93,32 @@ export default class admin extends React.Component {
               onChangeText={(wait) => this.setState({ wait })}
             />
 
-            <Touchable
-              onPress={() => {
-                firebase.database.ref(`locationMap/${this.state.current}`).update({
-                  wait: this.state.wait,
-                });
-              }}
-              style={myStyles.submitButton}
-            >
-              <View>
-                  <Text style={styles.cardtext}>
-                    Update time
-                  </Text>
-              </View>
+          <Touchable
+            onPress={() => {
+              const today = new Date();
+              const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+              const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+              const dateTime = `${date} ${time}`;
+              this.state.current.index = this.state.current.index - 1;
+              firebase.database().ref(`locationMap/markers/${this.state.current.index}/`).update({
+                waitTime: this.state.wait,
+                lastUpdated: dateTime,
+              });
+            }}
+            style={styles.submitButton}
+          >
+            <View>
+                <Text style={styles.cardtext}>
+                  Update time
+                </Text>
+            </View>
           </Touchable>
 
           <View style={myStyles.editTools}>
             <Input
               placeholder='Location Name'
               defaultValue={this.state.current.title}
-              onChangeText={(title) => { this.setState({ newLoc: { title, description: this.state.newLoc.description }}); }}
+              onChangeText={(title) => { this.setState({ newLoc: { title, description: this.state.newLoc.description } }); }}
             />
             <Input
               placeholder='Location Address'
