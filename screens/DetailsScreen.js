@@ -120,7 +120,11 @@ export default class DetailsScreen extends React.Component {
       console.log(compDate);
       // now compdate holds the currentLocation and the date
       let i = 0;
+      const { params } = this.props.navigation.state;
+      const wait = params ? params.waitTime : null;
+      const update = params ? params.lastUpdated : null;
 
-      Alert.alert('Number of Customers : ' + i);
+
+      Alert.alert('Wait time : ' + wait + ' minutes, which was last updated on ' + update);
     }
 }
