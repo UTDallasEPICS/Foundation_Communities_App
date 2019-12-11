@@ -98,6 +98,10 @@ const styles = StyleSheet.create({
 });
 
 export default class MapScreen extends Component {
+  index = 0;
+
+  animation = new Animated.Value(0);
+
   static navigationOptions = {
     headerTitle: <Text style={mystyles.headertitle}>Locations</Text>,
     headerStyle: {
@@ -107,11 +111,17 @@ export default class MapScreen extends Component {
     },
   };
 
-  state = { markers: [], region: {} };
+  state = { 
+    markers: [{
+      coordinate: {
+        latitude: 0,
+        longitude: 0,
+      }
+    }],
+    region: {},
+  };
 
   componentDidMount() {
-    this.index = 0;
-    this.animation = new Animated.Value(0);
     // axios.get('https://api.jsonbin.io/b/5bff17e790a73066ac17062b/1').then(response => this.setState(response.data));
     const ref = firebase.database().ref('locationMap');
     ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
@@ -171,6 +181,7 @@ export default class MapScreen extends Component {
     return (
       <View style={styles.container}>
         <MapView
+          ref={(map) => { this.map = map; }}
           initialRegion={INTIIAL_REGION}
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -179,7 +190,9 @@ export default class MapScreen extends Component {
             <Marker
               key={key}
               coordinate={marker.coordinate}
-            />
+            >
+              <Animated.View />
+            </Marker>
           ))}
         </MapView>
         <Animated.ScrollView
@@ -204,29 +217,28 @@ export default class MapScreen extends Component {
         >
           {this.state.markers.map((marker, index) => (
             <Touchable
-            style={styles.card}
-            key={index}
-            onPress={() => this.props.navigation.navigate('Details', {
-              title: 'Location',
-              location: marker.title,
-              description: marker.description,
-              image: this.state.markers[index].image,
-            })
-            }
+              style={styles.card}
+              key={index}
+              onPress={() => this.props.navigation.navigate('Details', {
+                title: 'Location',
+                location: marker.title,
+                description: marker.description,
+                image: this.state.markers[index].image,
+              })}
             >
-            <View style={{ flex: 1, flexDirection: 'column' }}>
-              <Image
-                source={marker.image}
-                style={styles.cardImage}
-                resizeMode='cover'
-              />
-              <View style={styles.textContent}>
-                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.description}
-                </Text>
+              <View style={{ flex: 1, flexDirection: 'column' }}>
+                <Image
+                  source={marker.image}
+                  style={styles.cardImage}
+                  resizeMode='cover'
+                />
+                <View style={styles.textContent}>
+                  <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
+                  <Text numberOfLines={1} style={styles.cardDescription}>
+                    {marker.description}
+                  </Text>
+                </View>
               </View>
-            </View>
             </Touchable>
           ))}
         </Animated.ScrollView>
