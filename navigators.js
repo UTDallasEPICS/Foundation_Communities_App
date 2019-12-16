@@ -20,6 +20,7 @@ import AboutScreen from './screens/AboutScreen';
 import MapScreen from './screens/MapScreen';
 import MoreScreen from './screens/MoreScreen';
 import ItemList from './screens/ItemList';
+import admin from './screens/admin';
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -39,6 +40,12 @@ const HomeStack = createStackNavigator({
     screen: FreeTaxScreen,
     navigationOptions: {
       tabBarLabel: 'Tax',
+    },
+  },
+  admin: {
+    screen: admin,
+    navigationOptions: {
+      tabBarLabel: 'admin',
     },
   },
 });
