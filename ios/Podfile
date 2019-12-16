@@ -40,7 +40,6 @@ target 'foundation_communities_app' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   target 'foundation_communities_appTests' do
