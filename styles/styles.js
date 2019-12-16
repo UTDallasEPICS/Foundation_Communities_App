@@ -8,9 +8,11 @@ const styles = StyleSheet.create({
     },
     headertitle: {
       textAlign: 'center',
-      fontSize: 20,
+      fontSize: 30,
       marginLeft: 15,
       fontFamily: 'mainFont',
+      color: 'black',
+      fontWeight: 'bold',
     },
     title: {
       textAlign: 'center',
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
       marginBottom: 20,
       textAlign: 'center',
       fontFamily: 'mainFont',
+      fontWeight: 'bold',
     },
     cardtitleBlack: {
       fontSize: 20,
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
       marginBottom: 5,
       textAlign: 'center',
       fontFamily: 'mainFont',
+      fontWeight: 'bold',
     },
     paraText: {
       marginTop: 10,
@@ -103,10 +107,10 @@ const styles = StyleSheet.create({
       marginBottom: 5,
     },
     cardStyle: { backgroundColor: '#ffffff', 
-    margin: 10, 
+    margin: 15, 
     marginBottom: 0, 
     padding: 10, 
-    borderRadius: 0, 
+    borderRadius: 15, 
     elevation: 2, 
     shadowColor: '#000',
     shadowRadius: 5,
@@ -120,8 +124,8 @@ const styles = StyleSheet.create({
     },
     miniHeader: {
        borderColor: 'transparent', 
-       backgroundColor: '#eeeeff', 
-       borderRadius: 0, 
+       backgroundColor: '#ffffff', 
+       borderRadius: 10, 
        elevation: 0, 
        shadowOpacity: 0.0 
       }

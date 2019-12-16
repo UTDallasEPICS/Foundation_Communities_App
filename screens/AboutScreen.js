@@ -24,14 +24,14 @@ export default class AboutScreen extends React.Component {
         >
 
           <ScrollView contentContainerStyle={{
-            backgroundColor: 'white', flexGrow: 1, justifyContent: 'flex-start', alignItems: 'stretch', paddingBottom: 20,
+            backgroundColor: '#f2ca6d', flexGrow: 1, justifyContent: 'flex-start', alignItems: 'stretch', paddingBottom: 20,
           }}>
             <Card
               containerStyle={styles.miniHeader}
               dividerStyle={{ backgroundColor: 'transparent' }}
             >
                 <View>
-                  <Text style={styles.title}>
+                  <Text style={styles.cardtitleBlack}>
                     Our Mission
                     </Text>
                 </View>
@@ -43,7 +43,7 @@ containerStyle={styles.miniHeader}
               dividerStyle={{ backgroundColor: 'transparent' }}
             >
                 <View>
-                  <Text style={styles.title}>
+                  <Text style={styles.cardtitleBlack}>
                     Our Story
                     </Text>
                 </View>

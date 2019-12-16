@@ -28,13 +28,18 @@ target 'foundation_communities_app' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'Firebase/Core', '~> 6.3.0'
-
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+  pod 'Firebase/Database', '~> 6.3.0'
 
 
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
+
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   target 'foundation_communities_appTests' do

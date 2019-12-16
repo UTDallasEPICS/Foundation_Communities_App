@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   scrollView: {
     paddingTop: 0,
     marginBottom: 0,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2ca6d',
   },
   endPadding: {
     paddingRight: width - (CARD_WIDTH / 0.25),
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     padding: 10,
     elevation: 2,
-    backgroundColor: '#FFF',
+    backgroundColor: '#f2ca6d',
     marginHorizontal: 10,
     shadowColor: '#000',
     shadowRadius: 5,
@@ -123,8 +123,8 @@ export default class MapScreen extends Component {
 
   componentDidMount() {
     // axios.get('https://api.jsonbin.io/b/5bff17e790a73066ac17062b/1').then(response => this.setState(response.data));
-    const ref = firebase.database().ref('locationMap');
-    ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
+    //const ref = firebase.database().ref('locationMap');
+    //ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
 
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
@@ -181,7 +181,6 @@ export default class MapScreen extends Component {
     return (
       <View style={styles.container}>
         <MapView
-          ref={(map) => { this.map = map; }}
           initialRegion={INTIIAL_REGION}
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -190,9 +189,6 @@ export default class MapScreen extends Component {
             <Marker
               key={key}
               coordinate={marker.coordinate}
-            >
-              <Animated.View />
-            </Marker>
           ))}
         </MapView>
         <Animated.ScrollView

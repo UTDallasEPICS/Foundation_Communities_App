@@ -29,7 +29,7 @@ export default class App extends React.Component {
       this.state.fontLoaded
         ? (
           <View style={{ flex: 1 }}>
-            <StatusBar translucent={true} backgroundColor="#fff" barStyle="dark-content"/>
+            <StatusBar translucent={true} backgroundColor="#ffffff" barStyle="dark-content"/>
             <AppContent />
           </View>
         )
