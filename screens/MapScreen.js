@@ -189,6 +189,7 @@ export default class MapScreen extends Component {
             <Marker
               key={key}
               coordinate={marker.coordinate}
+            />
           ))}
         </MapView>
         <Animated.ScrollView
