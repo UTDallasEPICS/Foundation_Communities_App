@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View,
+  ScrollView, View,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { CheckBox } from 'react-native-elements';
+import { CheckBox, Text, Divider } from 'react-native-elements';
 
 import items from '../items';
 
@@ -31,7 +31,7 @@ const ItemList = () => {
     itemList.forEach((item) => {
       if (item.isChecked === true) {
         numDone += 1;
-      } 
+      }
     });
     if (numDone === itemList.length) {
       setCompletion(true);
@@ -48,18 +48,28 @@ const ItemList = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       {
-        itemList.map((item, index) => (
-          <CheckBox
-            key={index}
-            title={item.name}
-            checked={item.isChecked}
-            onPress={() => { clicked(index); }}
-          />
-        ))
+        itemList.map((item, index) => (item.isHeader
+          ? (
+            <View key={index}>
+              <Divider />
+              <Text h4>
+                { item.name }
+              </Text>
+              <Divider />
+            </View>
+          )
+          : (
+            <CheckBox
+              key={index}
+              title={item.name}
+              checked={item.isChecked}
+              onPress={() => { clicked(index); }}
+            />
+          )))
       }
-    </View>
+    </ScrollView>
   );
 };
 
