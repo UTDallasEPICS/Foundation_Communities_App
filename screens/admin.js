@@ -9,6 +9,7 @@ import Geocode from 'react-geocode';
 import Snackbar from 'react-native-snackbar';
 import styles from '../styles/styles';
 import localization from '../localizations';
+import secrets from '../secrets';
 
 const myStyles = StyleSheet.create({
   container: {
@@ -72,7 +73,7 @@ export default class admin extends React.Component {
   };
 
   updateLocation() {
-    Geocode.setApiKey('AIzaSyBX1mD3OdwDcO2a6LGCUo-bnqBaopTji8A');
+    Geocode.setApiKey(secrets.google);
 
     Geocode.fromAddress(this.state.newLoc.description).then((res) => {
       const { lat, lng } = res.results[0].geometry.location;
@@ -97,7 +98,7 @@ export default class admin extends React.Component {
   }
 
   addLocation() {
-    Geocode.setApiKey('AIzaSyBX1mD3OdwDcO2a6LGCUo-bnqBaopTji8A');
+    Geocode.setApiKey(secrets.google);
     const address = this.state.newLoc.description;
     Geocode.fromAddress(address).then((res) => {
       const { lat, lng } = res.results[0].geometry.location;
