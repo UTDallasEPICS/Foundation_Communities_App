@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     padding: 10,
     elevation: 2,
-    backgroundColor: '#f2ca6d',
+    backgroundColor: '#fff',
     marginHorizontal: 10,
     shadowColor: '#000',
     shadowRadius: 5,
@@ -103,7 +104,7 @@ export default class MapScreen extends Component {
   animation = new Animated.Value(0);
 
   static navigationOptions = {
-    headerTitle: <Text style={mystyles.headertitle}>Locations</Text>,
+    headerTitle: () => <Text style={mystyles.headertitle}>Locations</Text>,
     headerStyle: {
       backgroundColor: 'white',
       elevation: 0.8,
@@ -111,20 +112,20 @@ export default class MapScreen extends Component {
     },
   };
 
-  state = { 
+  state = {
     markers: [{
       coordinate: {
         latitude: 0,
         longitude: 0,
-      }
+      },
     }],
     region: {},
   };
 
   componentDidMount() {
     // axios.get('https://api.jsonbin.io/b/5bff17e790a73066ac17062b/1').then(response => this.setState(response.data));
-    //const ref = firebase.database().ref('locationMap');
-    //ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
+    const ref = firebase.database().ref('locationMap');
+    ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
 
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
@@ -157,30 +158,31 @@ export default class MapScreen extends Component {
   }
 
   render() {
-    const { params } = this.props.navigation.state;
-    const mode = params ? params.mode : 0;
-    const interpolations = this.state.markers.map((marker, index) => {
-      const inputRange = [
-        (index - 1) * CARD_WIDTH * 3.5,
-        index * CARD_WIDTH * 3.5,
-        ((index + 1) * CARD_WIDTH * 3.5),
-      ];
-      const scale = this.animation.interpolate({
-        inputRange,
-        outputRange: [1, 2.5, 1],
-        extrapolate: 'clamp',
-      });
-      const opacity = this.animation.interpolate({
-        inputRange,
-        outputRange: [0.35, 1, 0.35],
-        extrapolate: 'clamp',
-      });
-      return { scale, opacity };
-    });
+    // const { params } = this.props.navigation.state;
+    // const mode = params ? params.mode : 0;
+    // const interpolations = this.state.markers.map((marker, index) => {
+    //   const inputRange = [
+    //     (index - 1) * CARD_WIDTH * 3.5,
+    //     index * CARD_WIDTH * 3.5,
+    //     ((index + 1) * CARD_WIDTH * 3.5),
+    //   ];
+    //   const scale = this.animation.interpolate({
+    //     inputRange,
+    //     outputRange: [1, 2.5, 1],
+    //     extrapolate: 'clamp',
+    //   });
+    //   const opacity = this.animation.interpolate({
+    //     inputRange,
+    //     outputRange: [0.35, 1, 0.35],
+    //     extrapolate: 'clamp',
+    //   });
+    //   return { scale, opacity };
+    // });
 
     return (
       <View style={styles.container}>
         <MapView
+          ref={(map) => { this.map = map; }}
           initialRegion={INTIIAL_REGION}
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -188,7 +190,7 @@ export default class MapScreen extends Component {
           {this.state.markers.map((marker, key) => (
             <Marker
               key={key}
-              coordinate={marker.coordinate}
+              coordinate={marker.coordinate} />
           ))}
         </MapView>
         <Animated.ScrollView
@@ -213,17 +215,16 @@ export default class MapScreen extends Component {
         >
           {this.state.markers.map((marker, index) => (
             <Touchable
-            style={styles.card}
-            key={index}
-            onPress={() => this.props.navigation.navigate('Details', {
-              title: 'Location',
-              location: marker.title,
-              description: marker.description,
-              image: this.state.markers[index].image,
-              waitTime: this.state.markers[index].waitTime,
-              lastUpdated: this.state.markers[index].lastUpdated,
-            })
-            }
+              style={styles.card}
+              key={index}
+              onPress={() => this.props.navigation.navigate('Details', {
+                title: 'Location',
+                location: marker.title,
+                description: marker.description,
+                image: this.state.markers[index].image,
+                waitTime: this.state.markers[index].waitTime,
+                lastUpdated: this.state.markers[index].lastUpdated,
+              })}
             >
               <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Image
