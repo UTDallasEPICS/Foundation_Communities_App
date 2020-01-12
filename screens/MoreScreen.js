@@ -1,24 +1,19 @@
 import React from 'react';
 import Touchable from 'react-native-platform-touchable';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import firebase from 'react-native-firebase';
 import {
   Text,
   View,
   TextInput,
   StyleSheet,
-  Picker,
   ScrollView,
-  Alert,
 } from 'react-native';
+import localization from '../localizations';
+
 import styles from '../styles/styles';
 
 
 const INITIAL_TIME = new Date();
 class MoreScreen extends React.Component {
-
-
-
   static navigationOptions = {
     tabBarLabel: '',
     headerTitle: <Text style={styles.headertitle}>Admin Login Screen</Text>,
@@ -31,7 +26,6 @@ class MoreScreen extends React.Component {
     state = {
       name: '',
       pass: '',
-
     };
 
 
@@ -39,12 +33,12 @@ class MoreScreen extends React.Component {
       return (
         <View style={{ backgroundColor: 'white', flex: 1 }}>
         <ScrollView>
-          <Text style={styles.requestTitle}>Enter credentials</Text>
+          <Text style={styles.requestTitle}>{ localization.enterCred }</Text>
 
           <TextInput
             style={myStyles.input}
             underlineColorAndroid="transparent"
-            placeholder="Username"
+            placeholder={ localization.usernameHint }
             placeholderTextColor="#dddddd"
             autoCapitalize="none"
             value={this.state.name}
@@ -55,7 +49,7 @@ class MoreScreen extends React.Component {
             secureTextEntry={true}
             style={myStyles.input}
             underlineColorAndroid="transparent"
-            placeholder="Password"
+            placeholder={ localization.passwordHint }
             placeholderTextColor="#dddddd"
             autoCapitalize="none"
             value={this.state.pass}
@@ -64,16 +58,16 @@ class MoreScreen extends React.Component {
 
 
           <Touchable
-          onPress={() => {
-            if(this.state.name === "" && this.state.pass === "")
-            { 
-            this.props.navigation.navigate('admin')}}} 
-            style={styles.cardStyle} 
-          style={styles.submitButton}
+            onPress={() => {
+              if (this.state.name === '' && this.state.pass === '') {
+                this.props.navigation.navigate('admin');
+              }
+            }}
+            style={styles.submitButton}
           >
             <View>
                 <Text style={styles.cardtext}>
-                  Log In
+                  { localization.loginPrompt }
                 </Text>
             </View>
         </Touchable>
