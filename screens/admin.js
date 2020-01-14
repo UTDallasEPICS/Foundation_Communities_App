@@ -5,6 +5,7 @@ import {
 import { Input } from 'react-native-elements';
 import Touchable from 'react-native-platform-touchable';
 import firebase from 'react-native-firebase';
+import storage from '@react-native-firebase/storage';
 import Geocode from 'react-geocode';
 import Snackbar from 'react-native-snackbar';
 import styles from '../styles/styles';
@@ -73,102 +74,134 @@ export default class admin extends React.Component {
   };
 
   updateLocation() {
-    Geocode.setApiKey(secrets.google);
-
     Geocode.fromAddress(this.state.newLoc.description).then((res) => {
       const { lat, lng } = res.results[0].geometry.location;
       const markerRef = firebase.database().ref('locationMap/markers');
 
-      markerRef.child(this.state.current.index).set({
+      const newLocations = [...this.state.locations];
+      newLocations[this.state.current.index] = {
         coordinate: { latitude: lat, longitude: lng },
         description: this.state.newLoc.description,
         title: this.state.newLoc.title,
-      });
+      };
 
-      Snackbar.show({
-        title: 'Location Updated',
-        duration: Snackbar.LENGTH_SHORT,
+      this.setState({ locations: newLocations });
+
+      markerRef.set(newLocations).then(() => {
+        Snackbar.show({
+          title: 'Location Updated',
+          duration: Snackbar.LENGTH_SHORT,
+        });
+
+        this.setState(
+          {
+            current: {
+              title: '',
+              index: 0,
+            },
+            locations: newLocations,
+          },
+        );
+      }).catch((err) => {
+        Snackbar.show({
+          title: 'Error in Updating Location',
+          duration: Snackbar.LENGTH_SHORT,
+        });
       });
-    }).catch(() => {
+    }).catch((err) => {
       Snackbar.show({
-        title: 'Error in Updating Location',
+        title: 'Error in Converting Location to lat and lng',
         duration: Snackbar.LENGTH_SHORT,
       });
     });
   }
 
   addLocation() {
-    Geocode.setApiKey(secrets.google);
     const address = this.state.newLoc.description;
     Geocode.fromAddress(address).then((res) => {
       const { lat, lng } = res.results[0].geometry.location;
       const markerRef = firebase.database().ref('locationMap/markers');
 
-      markerRef.child(this.state.locations.length).set({
-        coordinate: { latitude: lat, longitude: lng },
-        description: this.state.newLoc.description,
-        title: this.state.newLoc.title,
-      });
+      const storageRef = firebase.storage().ref('');
 
-      const newLocations = this.state.locations;
+      console.log('got location');
+
+      const newLocations = [...this.state.locations];
       newLocations.push({
         coordinate: { latitude: lat, longitude: lng },
         description: this.state.newLoc.description,
         title: this.state.newLoc.title,
       });
 
-      Snackbar.show({
-        title: 'Location Added',
-        duration: Snackbar.LENGTH_SHORT,
+      console.log('added location');
+
+      markerRef.set(newLocations).then(() => {
+        this.setState(
+          {
+            current: {
+              title: '',
+              index: 0,
+            },
+            locations: newLocations,
+          },
+        );
+
+        Snackbar.show({
+          title: 'Location Added',
+          duration: Snackbar.LENGTH_SHORT,
+        });
+      }).catch((err) => {
+        Snackbar.show({
+          title: 'Error in Adding Location',
+          duration: Snackbar.LENGTH_SHORT,
+        });
       });
     }).catch((err) => {
       Snackbar.show({
-        title: `Error in Adding Location ${err}`,
-        duration: Snackbar.LENGTH_SHORT,
+        title: 'Error in Converting Location to lat and lng',
+        duration: Snackbar.LENGTH_INDEFINITE,
       });
     });
   }
 
   deleteLocation() {
     const currLoc = this.state.current;
-    this.setState(
-      {
-        current: {
-          title: '',
-          index: 0,
-        },
-        locations: this.state.locations.map((loc) => loc.title !== currLoc.title),
-      },
-    );
+    console.log('setting state');
 
-    firebase.database().ref(`locationMap/markers/${currLoc.index}`)
-      .remove()
-      .then(() => {
-        Snackbar.show({
-          title: 'Location Deleted',
-          duration: Snackbar.LENGTH_SHORT,
-        });
-      })
-      .catch(() => {
-        Snackbar.show({
-          title: 'Error in Deleting Location',
-          duration: Snackbar.LENGTH_SHORT,
-        });
+    const newLocations = [...this.state.locations];
+    newLocations.splice(currLoc.index, 1);
+    console.log('set state');
 
-        this.setState({
-          locations: this.state.locations.push(currLoc),
-        });
+    const markerRef = firebase.database().ref('locationMap/markers');
+    console.log(`got database ${markerRef}`);
+    markerRef.set(newLocations).then(() => {
+      console.log('deleted');
+      Snackbar.show({
+        title: 'Location Deleted',
+        duration: Snackbar.LENGTH_SHORT,
       });
+      this.setState(
+        {
+          current: {
+            title: '',
+            index: 0,
+          },
+          locations: newLocations,
+        },
+      );
+    }).catch((err) => {
+      Snackbar.show({
+        title: 'Error in Deleting Location',
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    });
   }
 
   componentDidMount() {
+    Geocode.setApiKey(secrets.google);
     const ref = firebase.database().ref('locationMap');
     ref.on('value', (snapshot) => {
-      this.setState({ locations: snapshot.val().markers }); Snackbar.show({
-        title: `${this.state.locations.length}`,
-        duration: Snackbar.LENGTH_LONG,
-      });
-    });
+      this.setState({ locations: snapshot.val().markers }); });
   }
 
   render() {
@@ -188,15 +221,15 @@ export default class admin extends React.Component {
                 title: 'default',
                 index: -1,
               }} />
-              {this.state.locations.map((location, index) => {
+              {this.state.locations != null ? this.state.locations.map((location, index) => {
                 const picker = (
                   <Picker.Item key={index} label={location.title} value={location.title}/>
                 );
 
-                console.debug(`${location.title}\n ${index}\n ${this.state.locations.length}`);
+                // console.debug(`${location.title}\n ${index}\n ${this.state.locations.length}`);
 
                 return picker;
-              })}
+              }): null}
             </Picker>
 
             <Text style={styles.requestTitle}>
@@ -235,7 +268,7 @@ export default class admin extends React.Component {
           <View style={myStyles.editTools}>
             <Input
               placeholder={localization.locNameHint}
-              defaultValue={((this.state.locations[this.state.current.index] != null && this.state.current.title !== '')
+              defaultValue={((this.state.locations != null && this.state.locations[this.state.current.index] != null && this.state.current.title !== '')
                 ? this.state.locations[this.state.current.index].title
                 : '')}
               onChangeText={(title) => {
@@ -248,7 +281,7 @@ export default class admin extends React.Component {
             />
             <Input
               placeholder={localization.locAddHint}
-              defaultValue={ ((this.state.locations[this.state.current.index] != null && this.state.current.title !== '')
+              defaultValue={ ((this.state.locations != null && this.state.locations[this.state.current.index] != null && this.state.current.title !== '')
                 ? this.state.locations[this.state.current.index].description
                 : '')
               }
