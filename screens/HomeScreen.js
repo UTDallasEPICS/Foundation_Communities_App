@@ -92,10 +92,20 @@ export default class HomeScreen extends React.Component {
                     {localization.refundContent}
                   </Text>
                 </View>
-
           </Touchable>
 
-          <Touchable onPress={() => { Linking.openURL('https://www.facebook.com/DallasCTC/'); }} style={[styles.cardStyle, { height: 80, backgroundColor: '#4267B2' }]} >
+          <Touchable style={[styles.cardStyle]} onPress={() => { Linking.openURL('https://www.irs.gov/pub/irs-pdf/f13614c.pdf'); }} style={styles.cardStyle} >
+                <View>
+                  <Text style={styles.cardtitleBlack}>
+                    {localization.saveTimeTitle}
+                  </Text>
+                  <Text style={styles.cardtextBlack}>
+                    {localization.saveTimeContent}
+                  </Text>
+                </View>
+          </Touchable>
+
+          <Touchable onPress={() => { Linking.openURL('https://www.facebook.com/DallasCTC/'); }} style={[styles.cardStyle, { backgroundColor: '#4267B2' }]} >
                 <View>
                   <Text style={[styles.cardtitle, { marginBottom: 10 }]}>
                     {localization.facebookTitle}

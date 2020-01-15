@@ -61,6 +61,10 @@ const localization = new LocalizedStrings({
     locPrompt: 'Update Location Info',
     addPrompt: 'Add New Location',
     deletePrompt: 'Delete Location',
+    locationAccessTitle: 'Foundation Communities Location Access',
+    locationAccessMessage: 'Location needed to determine the distance between our centers and you',
+    saveTimeTitle: 'Want to Save time?',
+    saveTimeContent: 'Please fill out and PRINT Intake Sheet BEFORE arriving to one of the tax centers.',
   },
   es: {
     aboutTitle: ' Acerca de Nosotros’',
@@ -122,6 +126,10 @@ const localization = new LocalizedStrings({
     locPrompt: 'Actualizar Informacion de Ubicación',
     addPrompt: 'Agregar Nueva Ubicación',
     deletePrompt: 'Eliminar Ubicación',
+    locationAccessTitle: 'Acceso a la ubicación de comunidades fundacionales',
+    locationAccessMessage: 'Ubicación necesaria para determinar la distancia entre nuestros centros y usted',
+    saveTimeTitle: '¿Quiere ahorrar tiempo?',
+    saveTimeContent: 'Complete e IMPRIMA la hoja de admisión ANTES de llegar a uno de los centros de impuestos.',
   },
 });
 
