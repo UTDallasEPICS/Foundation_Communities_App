@@ -24,6 +24,7 @@ const ItemList = () => {
   const clicked = (index) => {
     const newList = itemList;
     newList[index].isChecked = !itemList[index].isChecked;
+    console.log(`Clicked: ${newList[index].name}`);
 
     setItemList(newList);
 
