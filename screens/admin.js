@@ -8,7 +8,6 @@ import firebase from 'react-native-firebase';
 import Geocode from 'react-geocode';
 import Snackbar from 'react-native-snackbar';
 import ImagePicker from 'react-native-image-picker';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
 import localization from '../localizations';
 import secrets from '../secrets';
@@ -41,8 +40,20 @@ const myStyles = StyleSheet.create({
   submitButtonText: {
     color: 'white',
   },
+  photos: {
+    width: 90,
+    height: 90,
+  },
   editTools: {},
 });
+
+const options = {
+  title: 'Select Image',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 
 export default class admin extends React.Component {
   state = {
@@ -119,7 +130,7 @@ export default class admin extends React.Component {
       });
   }
 
-  pickImage() {
+  pickImage = () => {
     ImagePicker.showImagePicker(options, (res) => {
       if (res.didCancel) {
         alert('Image Picker Cancelled');
@@ -334,13 +345,14 @@ export default class admin extends React.Component {
         </Touchable>
 
         <View style={myStyles.editTools}>
-          <TouchableOpacity>
+          <Touchable style={myStyles.submitButton} onPress={this.pickImage}>
             <View>
               <Text>Pick Image</Text>
             </View>
-          </TouchableOpacity>
+          </Touchable>
           {this.state.imgSource ? (
             <Image
+              style={myStyles.photos}
               source={this.state.imgSource}
             />
           ) : (
