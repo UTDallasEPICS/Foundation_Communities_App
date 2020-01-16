@@ -188,6 +188,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-image-picker')
     implementation project(':react-native-snackbar')
     implementation project(':react-native-localization')
     implementation project(':react-native-vector-icons')

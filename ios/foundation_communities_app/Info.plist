@@ -4,6 +4,10 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location needed to determine the distance between our centers and you</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choose a photo for centers</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take a photo for centers</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechromes</string>

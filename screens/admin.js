@@ -1,13 +1,14 @@
 import React from 'react';
 import {
-  Text, View, ScrollView, Picker, StyleSheet,
+  Text, View, ScrollView, Picker, StyleSheet, Image,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import Touchable from 'react-native-platform-touchable';
 import firebase from 'react-native-firebase';
-// import storage from '@react-native-firebase/storage';
 import Geocode from 'react-geocode';
 import Snackbar from 'react-native-snackbar';
+import ImagePicker from 'react-native-image-picker';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
 import localization from '../localizations';
 import secrets from '../secrets';
@@ -60,6 +61,7 @@ export default class admin extends React.Component {
       title: '',
       description: '',
     },
+    imgSource: '',
   };
 
   static navigationOptions = {
@@ -117,6 +119,33 @@ export default class admin extends React.Component {
       });
   }
 
+  pickImage() {
+    ImagePicker.showImagePicker(options, (res) => {
+      if (res.didCancel) {
+        alert('Image Picker Cancelled');
+      } else if (res.error) {
+        alert('Error Occured: ', res.error);
+      } else {
+        const source = { uri: res.uri };
+
+        this.setState({
+          imgSource: source,
+        });
+      }
+    });
+  }
+
+  uploadImage() {
+    const name = this.state.current.title;
+    const storageRef = firebase.storage().ref(`locations/images/${name}`);
+    storageRef.putFile(this.state.imgSource)
+      .on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+        let status = {
+          progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+        };
+      });
+  }
+
   addLocation() {
     const address = this.state.newLoc.description;
     Geocode.fromAddress(address)
@@ -124,7 +153,6 @@ export default class admin extends React.Component {
         const { lat, lng } = res.results[0].geometry.location;
         const markerRef = firebase.database().ref('locationMap/markers');
 
-        // const storageRef = firebase.storage().ref('');
 
         if (
           this.state.locations.find(
@@ -306,6 +334,18 @@ export default class admin extends React.Component {
         </Touchable>
 
         <View style={myStyles.editTools}>
+          <TouchableOpacity>
+            <View>
+              <Text>Pick Image</Text>
+            </View>
+          </TouchableOpacity>
+          {this.state.imgSource ? (
+            <Image
+              source={this.state.imgSource}
+            />
+          ) : (
+            <Text>Select an Image</Text>
+          )}
           <Input
             placeholder={localization.locNameHint}
             defaultValue={

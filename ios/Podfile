@@ -46,6 +46,8 @@ target 'foundation_communities_app' do
 
   pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'foundation_communities_appTests' do
     inherit! :search_paths
     # Pods for testing
