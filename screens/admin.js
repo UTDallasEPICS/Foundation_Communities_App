@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Text, View, ScrollView, Picker, StyleSheet, Image,
+  Text, View, ScrollView, Picker, StyleSheet,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import Touchable from 'react-native-platform-touchable';
@@ -345,19 +345,6 @@ export default class admin extends React.Component {
         </Touchable>
 
         <View style={myStyles.editTools}>
-          <Touchable style={myStyles.submitButton} onPress={this.pickImage}>
-            <View>
-              <Text>Pick Image</Text>
-            </View>
-          </Touchable>
-          {this.state.imgSource ? (
-            <Image
-              style={myStyles.photos}
-              source={this.state.imgSource}
-            />
-          ) : (
-            <Text>Select an Image</Text>
-          )}
           <Input
             placeholder={localization.locNameHint}
             defaultValue={

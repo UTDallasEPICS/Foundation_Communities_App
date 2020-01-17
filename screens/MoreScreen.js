@@ -59,7 +59,7 @@ class MoreScreen extends React.Component {
 
           <Touchable
             onPress={() => {
-              if (this.state.name === '' && this.state.pass === '') {
+              if (this.state.name === 'fcadmin' && this.state.pass === 'F0undCom1040!') {
                 this.props.navigation.navigate('admin');
               }
             }}
