@@ -42,6 +42,12 @@ target 'foundation_communities_app' do
   pod 'Google-Maps-iOS-Utils'
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
+  pod 'ReactNativeLocalization', :path => '../node_modules/react-native-localization'
+
+  pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'foundation_communities_appTests' do
     inherit! :search_paths
     # Pods for testing

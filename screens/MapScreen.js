@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -6,11 +8,15 @@ import {
   Animated,
   Image,
   Dimensions,
+  PermissionsAndroid,
 } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import { getDistance } from 'geolib';
 import firebase from 'react-native-firebase';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Touchable from 'react-native-platform-touchable';
 import mystyles from '../styles/styles';
+import localization from '../localizations';
 
 
 // import Geocoder from 'react-native-geocoding';
@@ -48,13 +54,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
     padding: 10,
     elevation: 2,
-    backgroundColor: '#f2ca6d',
+    backgroundColor: '#fff',
     marginHorizontal: 10,
     shadowColor: '#000',
     shadowRadius: 5,
     shadowOpacity: 0.3,
     shadowOffset: { x: 2, y: -2 },
-    height: CARD_HEIGHT - 15,
+    height: CARD_HEIGHT + 75,
     width: CARD_WIDTH * 3.5,
     overflow: 'visible',
   },
@@ -103,7 +109,7 @@ export default class MapScreen extends Component {
   animation = new Animated.Value(0);
 
   static navigationOptions = {
-    headerTitle: <Text style={mystyles.headertitle}>Locations</Text>,
+    headerTitle: () => <Text style={mystyles.headertitle}>Locations</Text>,
     headerStyle: {
       backgroundColor: 'white',
       elevation: 0.8,
@@ -111,20 +117,94 @@ export default class MapScreen extends Component {
     },
   };
 
-  state = { 
+  state = {
     markers: [{
       coordinate: {
         latitude: 0,
         longitude: 0,
-      }
+      },
     }],
     region: {},
+    currentLocation: {
+      latitude: 0,
+      longitude: 0,
+    },
+    grantedLocation: false,
   };
 
-  componentDidMount() {
+  async getLocationPermissions() {
+    try {
+      const hasPermission = await
+      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+
+      if (hasPermission) {
+        Geolocation.getCurrentPosition((pos) => {
+          const { latitude, longitude } = pos.coords;
+
+          this.setState({ currentLocation: { latitude, longitude } });
+
+          const locs = [...this.state.markers].map((loc) => {
+            const dist = (getDistance(loc.coordinate, this.state.currentLocation) * 0.00062137).toFixed(2);
+
+            return {
+              ...loc,
+              dist,
+            };
+          });
+
+          locs.sort((loc1, loc2) => {
+            return loc1.dist - loc2.dist;
+          });
+
+          this.setState({ markers: locs, grantedLocation: true });
+        });
+
+        return;
+      }
+
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: localization.locationAccessTitle,
+          message: localization.locationAccessMessage,
+          buttonNegative: 'Cancel',
+          buttonPositive: 'Ok',
+        },
+      );
+
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Geolocation.getCurrentPosition((pos) => {
+          const { latitude, longitude } = pos.coords;
+
+          this.setState({ currentLocation: { latitude, longitude } });
+
+          const locs = [...this.state.markers].map((loc) => {
+            const dist = (getDistance(loc.coordinate, this.state.currentLocation) * 0.00062137)
+              .toFixed(2);
+
+            return {
+              ...loc,
+              dist,
+            };
+          });
+
+          locs.sort((loc1, loc2) => {
+            return loc1.dist - loc2.dist;
+          });
+
+          this.setState({ markers: locs, grantedLocation: true });
+        });
+      } else {
+        this.setState({ grantedLocation: false });
+      }
+    // eslint-disable-next-line no-empty
+    } catch {}
+  }
+
+  async componentDidMount() {
     // axios.get('https://api.jsonbin.io/b/5bff17e790a73066ac17062b/1').then(response => this.setState(response.data));
-    //const ref = firebase.database().ref('locationMap');
-    //ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); });
+    const ref = firebase.database().ref('locationMap');
+    await ref.on('value', (snapshot) => { this.setState({ markers: snapshot.val().markers, region: snapshot.val().region }); this.getLocationPermissions(); });
 
     // We should detect when scrolling has stopped then animate
     // We should just debounce the event listener here
@@ -157,30 +237,31 @@ export default class MapScreen extends Component {
   }
 
   render() {
-    const { params } = this.props.navigation.state;
-    const mode = params ? params.mode : 0;
-    const interpolations = this.state.markers.map((marker, index) => {
-      const inputRange = [
-        (index - 1) * CARD_WIDTH * 3.5,
-        index * CARD_WIDTH * 3.5,
-        ((index + 1) * CARD_WIDTH * 3.5),
-      ];
-      const scale = this.animation.interpolate({
-        inputRange,
-        outputRange: [1, 2.5, 1],
-        extrapolate: 'clamp',
-      });
-      const opacity = this.animation.interpolate({
-        inputRange,
-        outputRange: [0.35, 1, 0.35],
-        extrapolate: 'clamp',
-      });
-      return { scale, opacity };
-    });
+    // const { params } = this.props.navigation.state;
+    // const mode = params ? params.mode : 0;
+    // const interpolations = this.state.markers.map((marker, index) => {
+    //   const inputRange = [
+    //     (index - 1) * CARD_WIDTH * 3.5,
+    //     index * CARD_WIDTH * 3.5,
+    //     ((index + 1) * CARD_WIDTH * 3.5),
+    //   ];
+    //   const scale = this.animation.interpolate({
+    //     inputRange,
+    //     outputRange: [1, 2.5, 1],
+    //     extrapolate: 'clamp',
+    //   });
+    //   const opacity = this.animation.interpolate({
+    //     inputRange,
+    //     outputRange: [0.35, 1, 0.35],
+    //     extrapolate: 'clamp',
+    //   });
+    //   return { scale, opacity };
+    // });
 
     return (
       <View style={styles.container}>
         <MapView
+          ref={(map) => { this.map = map; }}
           initialRegion={INTIIAL_REGION}
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -188,7 +269,7 @@ export default class MapScreen extends Component {
           {this.state.markers.map((marker, key) => (
             <Marker
               key={key}
-              coordinate={marker.coordinate}
+              coordinate={marker.coordinate} />
           ))}
         </MapView>
         <Animated.ScrollView
@@ -213,17 +294,16 @@ export default class MapScreen extends Component {
         >
           {this.state.markers.map((marker, index) => (
             <Touchable
-            style={styles.card}
-            key={index}
-            onPress={() => this.props.navigation.navigate('Details', {
-              title: 'Location',
-              location: marker.title,
-              description: marker.description,
-              image: this.state.markers[index].image,
-              waitTime: this.state.markers[index].waitTime,
-              lastUpdated: this.state.markers[index].lastUpdated,
-            })
-            }
+              style={styles.card}
+              key={index}
+              onPress={() => this.props.navigation.navigate('Details', {
+                title: 'Location',
+                location: marker.title,
+                description: marker.description,
+                image: this.state.markers[index].image,
+                waitTime: this.state.markers[index].waitTime,
+                lastUpdated: this.state.markers[index].lastUpdated,
+              })}
             >
               <View style={{ flex: 1, flexDirection: 'column' }}>
                 <Image
@@ -236,6 +316,18 @@ export default class MapScreen extends Component {
                   <Text numberOfLines={1} style={styles.cardDescription}>
                     {marker.description}
                   </Text>
+                  {
+                    this.state.grantedLocation
+                      ? <Text style={styles.cardDescription}>Current Distance: {marker.dist} mi</Text>
+                      : <Text style={styles.cardDescription}>Current Distance: Need Location Permissions</Text>
+                  }
+                  {
+                    (marker.waitTime && marker.waitTime > 0)
+                      ? <Text style={styles.cardDescription}>Wait Time of {marker.waitTime}, Last Updated {marker.lastUpdated}</Text>
+                      : (marker.waitTime
+                        ? <Text style={styles.cardDescription}>No Wait Time, Last Updated {marker.lastUpdated}</Text>
+                        : <Text style={styles.cardDescription}>Wait Time: Non Available</Text>)
+                  }
                 </View>
               </View>
             </Touchable>

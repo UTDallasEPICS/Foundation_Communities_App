@@ -42,6 +42,12 @@ const HomeStack = createStackNavigator({
       tabBarLabel: 'Tax',
     },
   },
+  Login: {
+    screen: MoreScreen,
+    navigationOptions: {
+      tabBarLabel: 'Login',
+    }
+  },
   admin: {
     screen: admin,
     navigationOptions: {
