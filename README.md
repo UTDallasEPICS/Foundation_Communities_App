@@ -18,22 +18,28 @@
 * Access to Firebase (the database we use to store information and send notifications)
 
 Important docs and guides: https://reactnative.dev/docs/getting-started
+
 Environment setup: https://reactnative.dev/docs/environment-setup
 (using native cli)
 
 Example library information:(only version we know can cause problems is Node if you have problems with running npm or react-native in terminal as invalid commands try using v12.8.0)
+
   Binaries:
-    Node: 12.8.0 - C:\Program Files\nodejs\node.EXE
-    Yarn: 1.22.0 - C:\Users\Username\AppData\Roaming\npm\yarn.CMD
-    npm: 6.10.2 - C:\Program Files\nodejs\npm.CMD
+    *Node: 12.8.0 - C:\Program Files\nodejs\node.EXE
+    *Yarn: 1.22.0 - C:\Users\Username\AppData\Roaming\npm\yarn.CMD
+    *npm: 6.10.2 - C:\Program Files\nodejs\npm.CMD
+    
   IDEs:
-    Android Studio: Version  3.5.0.0 AI-191.8026.42.35.6010548
+    *Android Studio: Version  3.5.0.0 AI-191.8026.42.35.6010548
+    
   Languages:
-    Java: 1.8.0_211
-    Python: 2.7.17
+    *Java: 1.8.0_211
+    *Python: 2.7.17
+    
   npmPackages:
-    react: 16.8.6 => 16.8.6
-    react-native: 0.60.5 => 0.60.5
+    *react: 16.8.6 => 16.8.6
+    *react-native: 0.60.5 => 0.60.5
+    
 You can check this with ‘react-native info’ (we only show this because sometime the most up to date versions aren't compatible with react-native, you might not need to worry about this)
 
 ##Iphone first time build:
