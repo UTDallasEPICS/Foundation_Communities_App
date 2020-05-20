@@ -40,6 +40,8 @@ export default class HomeScreen extends React.Component {
     -The fourth button is the "Where's My Refund?" button. When clicked, the user will
       be redirected to a government page on their web browser where
       they can check on the status of their refunds.
+    -The fifth button is the "Virtual Tax form" button. When clicked, the user will
+    be redirected to the Foundation communities virtual tax prep form
 
     -The last button on the homescreen is the "Find Us On Facebook" button. When clicked,
     it will bring the user to the Facebook page for Foundation
@@ -101,6 +103,14 @@ export default class HomeScreen extends React.Component {
                   </Text>
                   <Text style={styles.cardtextBlack}>
                     {localization.saveTimeContent}
+                  </Text>
+                </View>
+          </Touchable>
+
+          <Touchable style={[styles.cardStyle]} onPress={() => { Linking.openURL('https://www.dallastaxcenters.org/valetvita/'); }} style={styles.cardStyle} >
+                <View>
+                  <Text style={styles.cardtitleBlack}>
+                    {localization.virtualTax}
                   </Text>
                 </View>
           </Touchable>
