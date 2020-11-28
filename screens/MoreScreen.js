@@ -1,83 +1,100 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Touchable from 'react-native-platform-touchable';
-import {
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import {View, TextInput, StyleSheet, ScrollView} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import localization from '../localizations';
-
-import styles from '../styles/styles';
-
+import CustomText from '../components/CustomText';
 
 const INITIAL_TIME = new Date();
-class MoreScreen extends React.Component {
-  static navigationOptions = {
+
+//Login Page
+const MoreScreen = () => {
+  const navigation = useNavigation();
+  const navigationOptions = {
     tabBarLabel: '',
-    headerTitle: <Text style={styles.headertitle}>Admin Login Screen</Text>,
+    headerTitle: (
+      <CustomText style={styles.headertitle}>Admin Login Screen</CustomText>
+    ),
     headerStyle: {
       elevation: 0.4,
       shadowOpacity: 0.4,
     },
   };
 
-    state = {
-      name: '',
-      pass: '',
-    };
+  const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
 
-
-    render() {
-      return (
-        <View style={{ backgroundColor: 'white', flex: 1 }}>
-        <ScrollView>
-          <Text style={styles.requestTitle}>{ localization.enterCred }</Text>
-
-          <TextInput
-            style={myStyles.input}
-            underlineColorAndroid="transparent"
-            placeholder={ localization.usernameHint }
-            placeholderTextColor="#dddddd"
-            autoCapitalize="none"
-            value={this.state.name}
-            onChangeText={(name) => this.setState({ name })}
-          />
-          <TextInput
-            textContentType="password"
-            secureTextEntry={true}
-            style={myStyles.input}
-            underlineColorAndroid="transparent"
-            placeholder={ localization.passwordHint }
-            placeholderTextColor="#dddddd"
-            autoCapitalize="none"
-            value={this.state.pass}
-            onChangeText={(pass) => this.setState({ pass })}
-          />
-
-
-          <Touchable
-            onPress={() => {
-              if (this.state.name === 'fcadmin' && this.state.pass === 'F0undCom1040!') {
-                this.props.navigation.navigate('admin');
-              }
-            }}
-            style={styles.submitButton}
-          >
-            <View>
-                <Text style={styles.cardtext}>
-                  { localization.loginPrompt }
-                </Text>
-            </View>
+  return (
+    <View style={styles.whiteStyle}>
+      <ScrollView>
+        <CustomText style={styles.requestTitle}>
+          {localization.enterCred}
+        </CustomText>
+        {/* username input */}
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder={localization.usernameHint}
+          placeholderTextColor="#dddddd"
+          autoCapitalize="none"
+          value={name}
+          onChangeText={(nameIn) => setName(nameIn)}
+        />
+        {/* password input */}
+        <TextInput
+          textContentType="password"
+          secureTextEntry={true}
+          style={styles.input}
+          underlineColorAndroid="transparent"
+          placeholder={localization.passwordHint}
+          placeholderTextColor="#dddddd"
+          autoCapitalize="none"
+          value={pass}
+          onChangeText={(passIn) => setPass(passIn)}
+        />
+        {/* checks for correct login credentials */}
+        <Touchable
+          onPress={() => {
+            let username = name;
+            let password = pass;
+            if (username === 'fcadmin' && password === 'F0undCom1040') {
+              navigation.navigate('Admin');
+            }
+          }}
+          style={styles.submitButton}>
+          <View>
+            <CustomText style={styles.cardtext}>
+              {localization.loginPrompt}
+            </CustomText>
+          </View>
         </Touchable>
       </ScrollView>
-      </View>
-      );
-    }
-}
+    </View>
+  );
+};
 
-const myStyles = StyleSheet.create({
+const styles = StyleSheet.create({
+  //from old styles.js
+  headertitle: {
+    textAlign: 'center',
+    fontSize: 30,
+    marginLeft: 15,
+    fontFamily: 'System',
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  whiteStyle: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+  //from old
+  requestTitle: {
+    marginTop: 20,
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 0,
+    fontFamily: 'System',
+  },
   container: {
     paddingTop: 23,
   },
@@ -94,7 +111,7 @@ const myStyles = StyleSheet.create({
     borderColor: '#aaaaaa',
     borderRadius: 4,
     borderWidth: 1,
-    fontFamily: 'mainFont',
+    fontFamily: 'System',
   },
   submitButton: {
     backgroundColor: '#7a42f4',
@@ -104,6 +121,13 @@ const myStyles = StyleSheet.create({
   },
   submitButtonText: {
     color: 'white',
+  },
+  //from old
+  cardtext: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'System',
   },
 });
 

@@ -1,69 +1,37 @@
-platform :ios, '9.0'
+require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
-
-target 'foundation_communities_app' do
-  # Pods for foundation_communities_app
-  pod 'React', :path => '../node_modules/react-native/'
-  pod 'React-Core', :path => '../node_modules/react-native/React'
-  pod 'React-DevSupport', :path => '../node_modules/react-native/React'
-  pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
-  pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
-  pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
-  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
-  pod 'React-RCTLinking', :path => '../node_modules/react-native/Libraries/LinkingIOS'
-  pod 'React-RCTNetwork', :path => '../node_modules/react-native/Libraries/Network'
-  pod 'React-RCTSettings', :path => '../node_modules/react-native/Libraries/Settings'
-  pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
-  pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
-  pod 'React-RCTWebSocket', :path => '../node_modules/react-native/Libraries/WebSocket'
-
-  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
-  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
-  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
-  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
-  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-
-  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
-  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-
-  pod 'Firebase/Core', '~> 6.3.0'
-  pod 'Firebase/Database', '~> 6.3.0'
+# add the Firebase pod for Google Analytics
+pod 'Firebase/Analytics'
+# add pods for any other desired Firebase products
+# https://firebase.google.com/docs/ios/setup#available-pods
+platform :ios, '10.0'
 
 
+target 'FinancialApp' do
+  config = use_native_modules!
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  use_react_native!(:path => config["reactNativePath"])
 
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
-
-  rn_maps_path = '../node_modules/react-native-maps'
-  pod 'react-native-google-maps', :path => rn_maps_path
-  pod 'GoogleMaps'
-  pod 'Google-Maps-iOS-Utils'
-  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
-
-  pod 'ReactNativeLocalization', :path => '../node_modules/react-native-localization'
-
-  pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
-
-  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
-
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
-
-  target 'foundation_communities_appTests' do
-    inherit! :search_paths
+  target 'FinancialAppTests' do
+    inherit! :complete
     # Pods for testing
   end
 
-  use_native_modules!
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable these next few lines.
+  use_flipper!
+  post_install do |installer|
+    flipper_post_install(installer)
+  end
 end
 
-target 'foundation_communities_app-tvOS' do
-  # Pods for foundation_communities_app-tvOS
+target 'FinancialApp-tvOS' do
+  # Pods for FinancialApp-tvOS
 
-  target 'foundation_communities_app-tvOSTests' do
+  target 'FinancialApp-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
-
 end

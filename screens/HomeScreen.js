@@ -1,133 +1,182 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-/* eslint-disable react/prop-types */
-/* eslint-disable global-require */
 import React from 'react';
 import {
-  Text, View, ScrollView, Linking, ImageBackground,
+  View,
+  ScrollView,
+  Linking,
+  ImageBackground,
+  StyleSheet,
 } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
-import styles from '../styles/styles';
 import localization from '../localizations';
+import CustomText from '../components/CustomText';
+import {useNavigation} from '@react-navigation/native';
 
-export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Dallas Tax Centers',
-    headerTitleStyle: {
-      textAlign: 'center',
-      flex: 1,
-    },
-    headerStyle: {
-      backgroundColor: '#ffffff',
-      elevation: 0.8,
-      shadowOpacity: 0.8,
-    },
-  };
+const HomeScreen = () => {
+  const navigation = useNavigation();
+  return (
+    <ScrollView contentContainerStyle={styles.contentContainerStyle}>
+      <Touchable style={styles.cardStyle}>
+        <View style={styles.containerDirection}>
+          <ImageBackground
+            style={styles.containerHeight}
+            source={require('../assets/icon.png')}>
+            <View style={styles.containerFlex} />
+          </ImageBackground>
+        </View>
+      </Touchable>
 
-  /* These are the buttons for the homescreen.
-    -The very top button (all buttons are surrounded with a set of </Touchable>)
-      is the "About Us" button. When pressed, it will show the user
-      a little bit about the organization, their mission, and their story.
+      <Touchable
+        //need to fix this with navigator
+        onPress={() => navigation.navigate('AboutScreen')}
+        style={styles.cardStyle}>
+        <View style={styles.containerDirection}>
+          <CustomText style={[styles.cardtitleBlack]}>
+            {localization.aboutTitle}
+          </CustomText>
+          <CustomText style={styles.cardtextBlack}>
+            {localization.aboutContent}
+          </CustomText>
+        </View>
+      </Touchable>
 
-    -The second button is the "Free Tax Filing" button. This button will have a little
-      blurb on the homescreen that says "Click here to see locations!",
-      and once it is clicked, it will bring the user to the second tab on the app,
-      where they will be able to scroll between locations and see more information about them.
+      <Touchable
+        onPress={() => {
+          Linking.openURL(
+            'http://www.foundcom.org/wp-content/uploads/2014/10/What-to-Bring-Checklist-Bilingual.pdf',
+          );
+        }}
+        style={styles.cardStyle}>
+        <View>
+          <CustomText style={styles.cardtitleBlack}>
+            {localization.checklistTitle}
+          </CustomText>
+          <CustomText style={styles.cardtextBlack}>
+            {localization.checklistContent}
+          </CustomText>
+        </View>
+      </Touchable>
 
-    -The third button is the "Item Checklist". Once clicked, it will bring the user
-      to their web browser and open up a link that shows them what they
-      should bring before they go to a location
+      <Touchable
+        onPress={() => {
+          Linking.openURL(
+            'https://sa.www4.irs.gov/irfof/lang/en/irfofgetstatus.jsp',
+          );
+        }}
+        style={styles.cardStyle}>
+        <View>
+          <CustomText style={styles.cardtitleBlack}>
+            {localization.refundTitle}
+          </CustomText>
+          <CustomText style={styles.cardtextBlack}>
+            {localization.refundContent}
+          </CustomText>
+        </View>
+      </Touchable>
 
-    -The fourth button is the "Where's My Refund?" button. When clicked, the user will
-      be redirected to a government page on their web browser where
-      they can check on the status of their refunds.
-    -The fifth button is the "Virtual Tax form" button. When clicked, the user will
-    be redirected to the Foundation communities virtual tax prep form
+      <Touchable
+        onPress={() => {
+          Linking.openURL('https://www.irs.gov/pub/irs-pdf/f13614c.pdf');
+        }}
+        style={styles.cardStyle}>
+        <View>
+          <CustomText style={styles.cardtitleBlack}>
+            {localization.saveTimeTitle}
+          </CustomText>
+          <CustomText style={styles.cardtextBlack}>
+            {localization.saveTimeContent}
+          </CustomText>
+        </View>
+      </Touchable>
 
-    -The last button on the homescreen is the "Find Us On Facebook" button. When clicked,
-    it will bring the user to the Facebook page for Foundation
-      Communities.
-     */
-  render() {
-    return (
-        <ScrollView contentContainerStyle={{
-          backgroundColor: '#f2ca6d', flexGrow: 1, justifyContent: 'flex-start', alignItems: 'stretch', paddingBottom: 20,
-        }}>
-            <Touchable style={styles.cardStyle} >
-              <View style={{ flex: 1, flexDirection: 'column' }}>
-                <ImageBackground
-                style={{ flex: 1, height: 200 }}
-                source={require('../assets/icon.png')}
-                >
-                <View style={{ flex: 1 }} />
-                </ImageBackground>
-              </View>
-            </Touchable>
+      <Touchable
+        onPress={() => {
+          Linking.openURL('https://www.dallastaxcenters.org/valetvita/');
+        }}
+        style={styles.cardStyle}>
+        <View>
+          <CustomText style={styles.cardtitleBlack}>
+            {localization.virtualTax}
+          </CustomText>
+        </View>
+      </Touchable>
 
-            <Touchable onPress={() => this.props.navigation.navigate('About')} style={styles.cardStyle} >
-                <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <Text style={[styles.cardtitleBlack]}>
-                      {localization.aboutTitle}
-                    </Text>
-                    <Text style={styles.cardtextBlack}>
-                      {localization.aboutContent}
-                    </Text>
-                </View>
-          </Touchable>
+      <Touchable
+        onPress={() => {
+          Linking.openURL('https://www.facebook.com/DallasCTC/');
+        }}
+        style={[styles.cardStyle, styles.buttonBGColor]}>
+        <View>
+          <CustomText style={[styles.cardtitle, styles.bottomMargin]}>
+            {localization.facebookTitle}
+          </CustomText>
+          <CustomText style={styles.cardtext}>
+            {localization.facebookContent}
+          </CustomText>
+        </View>
+      </Touchable>
+    </ScrollView>
+  );
+};
 
-          <Touchable style={[styles.cardStyle]} onPress={() => { Linking.openURL('http://www.foundcom.org/wp-content/uploads/2014/10/What-to-Bring-Checklist-Bilingual.pdf'); }} style={styles.cardStyle} >
-                <View>
-                  <Text style={styles.cardtitleBlack}>
-                    {localization.checklistTitle}
-                  </Text>
-                  <Text style={styles.cardtextBlack}>
-                    {localization.checklistContent}
-                  </Text>
-                </View>
-          </Touchable>
+const styles = StyleSheet.create({
+  contentContainerStyle: {
+    backgroundColor: '#f2ca6d',
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    paddingBottom: 20,
+  },
+  cardStyle: {
+    backgroundColor: '#ffffff',
+    margin: 10,
+    marginBottom: 0,
+    padding: 10,
+    borderRadius: 15,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowRadius: 5,
+    shadowOpacity: 0.3,
+    shadowOffset: {x: 2, y: -2},
+  },
+  containerStyle: {
+    backgroundColor: '#f2ca6d',
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    paddingBottom: 20,
+  },
+  containerDirection: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  containerHeight: {
+    flex: 1,
+    height: 240,
+  },
+  containerFlex: {
+    flex: 1,
+  },
+  buttonBGColor: {
+    backgroundColor: '#4267B2',
+  },
+  bottomMargin: {
+    marginBottom: 10,
+  },
+  cardtitleBlack: {
+    fontSize: 20,
+    color: 'black',
+    marginBottom: 5,
+    textAlign: 'center',
+    fontFamily: 'System',
+    fontWeight: 'bold',
+  },
+  cardtextBlack: {
+    fontSize: 16,
+    color: 'black',
+    marginBottom: 5,
+    textAlign: 'center',
+    fontFamily: 'System',
+  },
+});
 
-          <Touchable style={[styles.cardStyle]} onPress={() => { Linking.openURL('https://sa.www4.irs.gov/irfof/lang/en/irfofgetstatus.jsp'); }} style={styles.cardStyle} >
-                <View>
-                  <Text style={styles.cardtitleBlack}>
-                    {localization.refundTitle}
-                  </Text>
-                  <Text style={styles.cardtextBlack}>
-                    {localization.refundContent}
-                  </Text>
-                </View>
-          </Touchable>
-
-          <Touchable style={[styles.cardStyle]} onPress={() => { Linking.openURL('https://www.irs.gov/pub/irs-pdf/f13614c.pdf'); }} style={styles.cardStyle} >
-                <View>
-                  <Text style={styles.cardtitleBlack}>
-                    {localization.saveTimeTitle}
-                  </Text>
-                  <Text style={styles.cardtextBlack}>
-                    {localization.saveTimeContent}
-                  </Text>
-                </View>
-          </Touchable>
-
-          <Touchable style={[styles.cardStyle]} onPress={() => { Linking.openURL('https://www.dallastaxcenters.org/valetvita/'); }} style={styles.cardStyle} >
-                <View>
-                  <Text style={styles.cardtitleBlack}>
-                    {localization.virtualTax}
-                  </Text>
-                </View>
-          </Touchable>
-
-          <Touchable onPress={() => { Linking.openURL('https://www.facebook.com/DallasCTC/'); }} style={[styles.cardStyle, { backgroundColor: '#4267B2' }]} >
-                <View>
-                  <Text style={[styles.cardtitle, { marginBottom: 10 }]}>
-                    {localization.facebookTitle}
-                  </Text>
-                  <Text style={styles.cardtext}>
-                    {localization.facebookContent}
-                  </Text>
-                </View>
-
-          </Touchable>
-
-        </ScrollView>
-    );
-  }
-}
+export default HomeScreen;
